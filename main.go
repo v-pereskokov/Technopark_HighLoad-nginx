@@ -1,29 +1,50 @@
 package main
 
 import (
-	"flag"
 	"fmt"
-	"github.com/vladpereskokov/Technopark_HighLoad-nginx/server"
-	"runtime"
+	"net"
+	"os"
 )
 
 const (
 	CONN_HOST = "localhost"
-	CONN_PORT = "8001"
+	CONN_PORT = "3333"
+	CONN_TYPE = "tcp"
 )
 
 func main() {
+	// Listen for incoming connections.
+	l, err := net.Listen(CONN_TYPE, CONN_HOST+":"+CONN_PORT)
+	if err != nil {
+		fmt.Println("Error listening:", err.Error())
+		os.Exit(1)
+	}
+	// Close the listener when the application closes.
+	defer l.Close()
+	fmt.Println("Listening on " + CONN_HOST + ":" + CONN_PORT)
+	for {
+		// Listen for an incoming connection.
+		conn, err := l.Accept()
+		if err != nil {
+			fmt.Println("Error accepting: ", err.Error())
+			os.Exit(1)
+		}
+		// Handle connections in a new goroutine.
+		go handleRequest(conn)
+	}
+}
 
-	ROOT := flag.String("r", "/home/ilia/go/src/github.com/iliabulavintsev/httpd/", " dir Root")
-	NUM_CPU := flag.Int("c", runtime.NumCPU(), "num of cpu")
-
-	flag.Parse()
-
-	fmt.Println("root: ", *ROOT)
-	fmt.Println("cpu: ", *NUM_CPU)
-	runtime.GOMAXPROCS(*NUM_CPU)
-
-	server := server.Server{}
-	server.Create(CONN_HOST, CONN_PORT)
-	server.Start()
+// Handles incoming requests.
+func handleRequest(conn net.Conn) {
+	// Make a buffer to hold incoming data.
+	buf := make([]byte, 1024)
+	// Read the incoming connection into the buffer.
+	_, err := conn.Read(buf)
+	if err != nil {
+		fmt.Println("Error reading:", err.Error())
+	}
+	// Send a response back to person contacting us.
+	conn.Write([]byte("Message received."))
+	// Close the connection when you're done with it.
+	conn.Close()
 }
