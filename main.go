@@ -1,6 +1,7 @@
 package main
 
 import (
+	"github.com/vladpereskokov/Technopark_HighLoad-nginx/server"
 	"github.com/vladpereskokov/Technopark_HighLoad-nginx/utils"
 	"log"
 )
@@ -11,5 +12,6 @@ func main() {
 		log.Panicf("can not init config: %v", err)
 	}
 
-	log.Print(config.GetPort())
+	httpServer := server.Server{}
+	httpServer.Start(config)
 }
