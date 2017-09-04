@@ -14,7 +14,7 @@ type Server struct {
 }
 
 func (server *Server) Start(config *configs.Config) {
-	_, err := net.Listen(config.GetNetwork, ":"+config.GetPort())
+	_, err := net.Listen(config.GetNetwork(), ":"+config.GetPort())
 	if err != nil {
 		panic("Failed start server: " + err.Error())
 	}
