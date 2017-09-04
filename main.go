@@ -11,4 +11,5 @@ func main() {
 		log.Panicf("can not init config: %v", err)
 	}
 
+	log.Println(config)
 }
