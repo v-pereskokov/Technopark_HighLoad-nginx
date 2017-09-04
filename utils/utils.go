@@ -1,11 +1,11 @@
 package utils
 
 import (
-	"encoding/json"
-	"fmt"
-	"github.com/vladpereskokov/Technopark_HighLoad-nginx/configs"
 	"io/ioutil"
+	"fmt"
+	"encoding/json"
 	"log"
+	"github.com/vladpereskokov/Technopark_HighLoad-nginx/configs"
 )
 
 func FromFile(filename string) (*configs.Config, error) {
@@ -21,7 +21,6 @@ func FromFile(filename string) (*configs.Config, error) {
 func fromReader(r []byte) (*configs.Config, error) {
 	config := new(configs.Config)
 	err := json.Unmarshal(r, &config)
-	log.Printf("%v", config)
 
 	if err != nil {
 		return config, fmt.Errorf("can not parse config: %v", err)
