@@ -6,7 +6,7 @@ import (
 )
 
 func main() {
-	config, err := utils.FromFile("config.json")
+	config, err := utils.FromFile("config_test.json")
 	if err != nil {
 		log.Panicf("can not init config: %v", err)
 	}
