@@ -10,7 +10,19 @@ func TestFromFile(t *testing.T) {
 		t.Errorf("%v\n", err.Error())
 	}
 
+	if config.GetNetwork() != "tcp" {
+		t.Errorf("host don't match! %s", config.GetNetwork())
+	}
+
+	if config.GetProtocol() != "http" {
+		t.Errorf("host don't match! %s", config.GetProtocol())
+	}
+
+	if config.GetHost() != "localhost" {
+		t.Errorf("host don't match! %s", config.GetHost())
+	}
+
 	if config.GetPort() != "2007" {
-		t.Errorf("Don't match! %s", config.GetPort())
+		t.Errorf("port don't match! %s", config.GetPort())
 	}
 }
