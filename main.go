@@ -6,8 +6,10 @@ import (
 )
 
 func main() {
-	_, err := utils.FromFile("config.json")
+	config, err := utils.FromFile("config.json")
 	if err != nil {
 		log.Panicf("can not init config: %v", err)
 	}
+
+	log.Print(config.GetPort())
 }
