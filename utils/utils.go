@@ -1,11 +1,10 @@
 package utils
 
 import (
-	"io/ioutil"
-	"fmt"
 	"encoding/json"
-	"log"
+	"fmt"
 	"github.com/vladpereskokov/Technopark_HighLoad-nginx/configs"
+	"io/ioutil"
 )
 
 func FromFile(filename string) (*configs.Config, error) {
