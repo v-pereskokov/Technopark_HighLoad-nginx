@@ -10,7 +10,7 @@ func TestFromFile(t *testing.T) {
 		t.Errorf("%v\n", err.Error())
 	}
 
-	if config.GetPort() != "3000" {
+	if config.GetPort() != "2007" {
 		t.Error("Don't match!")
 	}
 }
