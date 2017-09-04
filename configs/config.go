@@ -3,32 +3,22 @@ package configs
 import (
 	"encoding/json"
 	"fmt"
-	"io"
+	"io/ioutil"
+	"log"
 	"os"
+	"strconv"
 )
 
 type Config struct {
-	server *Server
+	Port int `json:"port"`
 }
 
-func FromFile(filename string) (*Config, error) {
-	file, err := os.Open(filename)
-	defer file.Close()
+func (config *Config) GetPort() string {
+	port := os.Getenv("PORT")
 
-	if err != nil {
-		return &Config{}, fmt.Errorf("can not open file: %v", err)
+	if port == "" {
+		port = strconv.Itoa(config.Port)
 	}
 
-	return fromReader(file)
-}
-
-func fromReader(r io.Reader) (*Config, error) {
-	config := new(Config)
-	err := json.NewDecoder(r).Decode(config)
-
-	if err != nil {
-		return config, fmt.Errorf("can not parse config: %v", err)
-	}
-
-	return config, nil
+	return port
 }
