@@ -11,7 +11,7 @@ type Config struct {
 	server *Server
 }
 
-func (config Config) FromFile(filename string) (*Config, error) {
+func FromFile(filename string) (*Config, error) {
 	file, err := os.Open(filename)
 	defer file.Close()
 
@@ -19,10 +19,10 @@ func (config Config) FromFile(filename string) (*Config, error) {
 		return &Config{}, fmt.Errorf("can not open file: %v", err)
 	}
 
-	return config.fromReader(file)
+	return fromReader(file)
 }
 
-func (_ Config) fromReader(r io.Reader) (*Config, error) {
+func fromReader(r io.Reader) (*Config, error) {
 	config := new(Config)
 	err := json.NewDecoder(r).Decode(config)
 

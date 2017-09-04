@@ -1,21 +1,14 @@
 package main
 
 import (
-	"fmt"
+	"github.com/vladpereskokov/Technopark_HighLoad-nginx/configs"
 	"log"
-	"net/http"
 )
 
 func main() {
-
-	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		http.ServeFile(w, r, r.URL.Path[1:])
-	})
-
-	http.HandleFunc("/hi", func(w http.ResponseWriter, r *http.Request) {
-		fmt.Fprintf(w, "Hi")
-	})
-
-	log.Fatal(http.ListenAndServe(":8081", nil))
+	config, err := configs.FromFile("config.json")
+	if err != nil {
+		log.Panicf("can not init config: %v", err)
+	}
 
 }
