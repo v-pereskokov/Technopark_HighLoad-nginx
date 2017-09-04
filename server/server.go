@@ -1,3 +1,7 @@
 package server
 
-//import "net"
+type Server struct {
+	protocol string
+	host     string
+	port     string
+}
