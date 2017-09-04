@@ -11,6 +11,6 @@ func TestFromFile(t *testing.T) {
 	}
 
 	if config.GetPort() != "2007" {
-		t.Error("Don't match!")
+		t.Errorf("Don't match! %s", config.GetPort())
 	}
 }
