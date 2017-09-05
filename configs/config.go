@@ -1,6 +1,7 @@
 package configs
 
 import (
+	"fmt"
 	"os"
 	"strconv"
 )
@@ -34,6 +35,8 @@ func (config *Config) GetPort() string {
 
 func (config *Config) GetDir() string {
 	config.Dir.FindDir()
+
+	fmt.Println(config.Dir.Path)
 
 	return config.Dir.Path
 }
