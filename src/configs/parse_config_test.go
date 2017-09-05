@@ -16,24 +16,27 @@ func TestFromFileFirst(t *testing.T) {
 		t.Errorf("%v\n", err.Error())
 	}
 
-	if config.GetNetwork() != "tcp" {
-		t.Errorf("network don't match! %s", config.GetNetwork())
+	serverConfig := config.GetServer()
+	dirConfig := config.GetDir()
+
+	if serverConfig.GetNetwork() != "tcp" {
+		t.Errorf("network don't match! %s", serverConfig.GetNetwork())
 	}
 
-	if config.GetProtocol() != "http" {
-		t.Errorf("protocol don't match! %s", config.GetProtocol())
+	if serverConfig.GetProtocol() != "http" {
+		t.Errorf("protocol don't match! %s", serverConfig.GetProtocol())
 	}
 
-	if config.GetHost() != "localhost" {
-		t.Errorf("host don't match! %s", config.GetHost())
+	if serverConfig.GetHost() != "localhost" {
+		t.Errorf("host don't match! %s", serverConfig.GetHost())
 	}
 
-	if config.GetPort() != "2007" {
-		t.Errorf("port don't match! %s", config.GetPort())
+	if serverConfig.GetPort() != "2007" {
+		t.Errorf("port don't match! %s", serverConfig.GetPort())
 	}
 
-	if config.GetDir() != "/Users/vladislavpereskokov/Desktop/" {
-		t.Errorf("dir don't match! %s", config.GetPort())
+	if dirConfig.GetDir() != "/usr/topDir/" {
+		t.Errorf("dir don't match! %s", dirConfig.GetDir())
 	}
 }
 
@@ -43,23 +46,26 @@ func TestFromFileSecond(t *testing.T) {
 		t.Errorf("%v\n", err.Error())
 	}
 
-	if config.GetNetwork() != "tcp" {
-		t.Errorf("network don't match! %s", config.GetNetwork())
+	serverConfig := config.GetServer()
+	dirConfig := config.GetDir()
+
+	if serverConfig.GetNetwork() != "tcp" {
+		t.Errorf("network don't match! %s", serverConfig.GetNetwork())
 	}
 
-	if config.GetProtocol() != "http" {
-		t.Errorf("protocol don't match! %s", config.GetProtocol())
+	if serverConfig.GetProtocol() != "http" {
+		t.Errorf("protocol don't match! %s", serverConfig.GetProtocol())
 	}
 
-	if config.GetHost() != "localhost" {
-		t.Errorf("host don't match! %s", config.GetHost())
+	if serverConfig.GetHost() != "localhost" {
+		t.Errorf("host don't match! %s", serverConfig.GetHost())
 	}
 
-	if config.GetPort() != "2007" {
-		t.Errorf("port don't match! %s", config.GetPort())
+	if serverConfig.GetPort() != "2007" {
+		t.Errorf("port don't match! %s", serverConfig.GetPort())
 	}
 
-	if !strings.Contains(config.GetDir(), "github.com/vladpereskokov/Technopark_HighLoad-nginx/") {
-		t.Errorf("pwd dir don't match! %s", config.GetPort())
+	if !strings.Contains(dirConfig.GetDir(), "github.com/vladpereskokov/Technopark_HighLoad-nginx/") {
+		t.Errorf("pwd dir don't match! %s", dirConfig.GetDir())
 	}
 }
