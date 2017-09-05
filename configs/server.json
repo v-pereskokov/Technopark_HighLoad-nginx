@@ -29,5 +29,13 @@
       "code": 405,
       "message": "Method not allowed"
     }
+  ],
+  "methods": [
+    {
+      "type": "GET"
+    },
+    {
+      "type": "HEAD"
+    }
   ]
 }
