@@ -4,12 +4,12 @@ import "github.com/vladpereskokov/Technopark_HighLoad-nginx/src/models"
 
 var (
 	STATUSES = map[string]models.Status{
-		"ok":                 {message: "200 OK", code: 200},
-		"not_found":          {message: "404 NOT FOUND", code: 404},
-		"bad_request":        {message: "400 BAD REQUEST", code: 400},
-		"forbidden":          {message: "403 FORBIDDEN", code: 403},
-		"method_not_allowed": {message: "405 METHOD NOT ALLOWED", code: 405},
-		"not_supports":       {message: "505 HTTP VERSION NOT SUPPORTED", code: 505},
+		"ok":                 {Message: "200 OK", Code: 200},
+		"not_found":          {Message: "404 NOT FOUND", Code: 404},
+		"bad_request":        {Message: "400 BAD REQUEST", Code: 400},
+		"forbidden":          {Message: "403 FORBIDDEN", Code: 403},
+		"method_not_allowed": {Message: "405 METHOD NOT ALLOWED", Code: 405},
+		"not_supports":       {Message: "505 HTTP VERSION NOT SUPPORTED", Code: 505},
 	}
 	IMPLEMENTED_METHODS = []string{
 		"GET",
