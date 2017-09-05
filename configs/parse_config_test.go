@@ -1,8 +1,8 @@
-package utils
+package configs
 
 import (
-	"strings"
 	"testing"
+	"strings"
 )
 
 const file_1 = "config_test_1.json"
