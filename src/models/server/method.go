@@ -1,4 +1,4 @@
-package models
+package server
 
 type Method struct {
 	value string

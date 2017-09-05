@@ -2,14 +2,14 @@ package handler
 
 import (
 	"fmt"
-	"github.com/vladpereskokov/Technopark_HighLoad-nginx/src/models"
+	modelServer "github.com/vladpereskokov/Technopark_HighLoad-nginx/src/models/server"
 	"net"
 )
 
 type Handler struct {
 	Connection net.Conn
-	Request    *models.Request
-	Response   *models.Response
+	Request    *modelServer.Request
+	Response   *modelServer.Response
 	Dir        string
 }
 
