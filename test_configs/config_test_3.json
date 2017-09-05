@@ -1,13 +1,4 @@
 {
-  "server": {
-    "network": "tcp",
-    "protocol": "http",
-    "host": "localhost",
-    "port": 3000
-  },
-  "dir": {
-    "path": "/Users/vladislavpereskokov/Desktop/"
-  },
   "status": [
     {
       "code": 200,

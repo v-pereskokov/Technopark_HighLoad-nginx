@@ -1,6 +1,6 @@
 package server
 
 type Status struct {
-	Message string
-	Code    int
+	Message string `json:"message"`
+	Code    int    `json:"code"`
 }
