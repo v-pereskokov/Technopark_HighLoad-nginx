@@ -5,11 +5,13 @@ import (
 	"testing"
 )
 
-const file_1 = "config_test_1.json"
-const file_2 = "config_test_2.json"
+const (
+	FILE_1 = "config_test_1.json"
+	FILE_2 = "config_test_2.json"
+)
 
 func TestFromFileFirst(t *testing.T) {
-	config, err := FromFile(file_1)
+	config, err := FromFile(FILE_1)
 	if err != nil {
 		t.Errorf("%v\n", err.Error())
 	}
@@ -36,7 +38,7 @@ func TestFromFileFirst(t *testing.T) {
 }
 
 func TestFromFileSecond(t *testing.T) {
-	config, err := FromFile(file_2)
+	config, err := FromFile(FILE_2)
 	if err != nil {
 		t.Errorf("%v\n", err.Error())
 	}

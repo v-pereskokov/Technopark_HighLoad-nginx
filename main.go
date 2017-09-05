@@ -6,8 +6,10 @@ import (
 	"log"
 )
 
+const CONFIG = "config.json"
+
 func main() {
-	config, err := configs.FromFile("config.json")
+	config, err := configs.FromFile(CONFIG)
 	if err != nil {
 		log.Panicf("can not init config: %v", err)
 	}
