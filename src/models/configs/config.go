@@ -1,6 +1,6 @@
 package configs
 
-//import modelServer "github.com/vladpereskokov/Technopark_HighLoad-nginx/src/models/server"
+import modelServer "github.com/vladpereskokov/Technopark_HighLoad-nginx/src/models/server"
 
 type Config struct {
 	Server   *Server
@@ -17,8 +17,5 @@ func (config *Config) GetDir() *Dir {
 }
 
 type Statuses struct {
-	Status []struct {
-		Message string
-		Code    int
-	} `json:"status"`
+	Status []modelServer.Status `json:"status"`
 }
