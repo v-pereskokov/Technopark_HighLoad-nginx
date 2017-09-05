@@ -1,0 +1,11 @@
+{
+  "object": {
+    "test": "test"
+  },
+  "content_type": [
+    {
+      "expansion": ".css",
+      "type": "text/css"
+    }
+  ]
+}

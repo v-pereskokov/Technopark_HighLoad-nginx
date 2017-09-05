@@ -12,6 +12,7 @@ const (
 	FILE_2 = "../../test_configs/config_test_2.json"
 	FILE_3 = "../../test_configs/config_test_3.json"
 	FILE_4 = "../../test_configs/config_test_4.json"
+	FILE_5 = "../../test_configs/config_test_5.json"
 )
 
 func TestFromFileFirst(t *testing.T) {
@@ -93,7 +94,7 @@ func TestFromFileThird(t *testing.T) {
 	}
 }
 
-func TestFromFileMethods(t *testing.T) {
+func TestFromFileFourth(t *testing.T) {
 	config := new(modelServer.Methods)
 
 	err := FromFile(FILE_4, &config)
@@ -103,6 +104,21 @@ func TestFromFileMethods(t *testing.T) {
 
 	for _, value := range config.Content {
 		if value.Type != "GET" {
+			t.Error("Don't work")
+		}
+	}
+}
+
+func TestFromFileFifth(t *testing.T) {
+	config := new(modelServer.ContentTypes)
+
+	err := FromFile(FILE_5, &config)
+	if err != nil {
+		t.Errorf("%v\n", err.Error())
+	}
+
+	for _, value := range config.Content {
+		if value.Expansion != ".css" || value.Type != "text/css" {
 			t.Error("Don't work")
 		}
 	}
