@@ -12,3 +12,7 @@ func (config *Config) GetServer() *Server {
 func (config *Config) GetDir() *Dir {
 	return config.Dir
 }
+
+type Test struct {
+	Test string `json:"test"`
+}
