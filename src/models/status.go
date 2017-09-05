@@ -1,6 +1,6 @@
 package models
 
 type Status struct {
-	message string
-	code    int
+	Message string
+	Code    int
 }
