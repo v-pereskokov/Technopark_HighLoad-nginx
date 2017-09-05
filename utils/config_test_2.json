@@ -1,0 +1,11 @@
+{
+  "server": {
+    "network": "tcp",
+    "protocol": "http",
+    "host": "localhost",
+    "port": 2007
+  },
+  "dir": {
+    "path": "pwd"
+  }
+}
