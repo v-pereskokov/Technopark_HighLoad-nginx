@@ -17,8 +17,8 @@ import (
 
 type Handler struct {
 	Connection net.Conn
-	request    *models.Request
-	response   *models.Response
+	Request    *models.Request
+	Response   *models.Response
 }
 
 func (handler *Handler) Start(channel chan net.Conn) {
@@ -37,19 +37,19 @@ func (handler *Handler) Start(channel chan net.Conn) {
 }
 
 func (handler *Handler) get_path() string {
-	return handler.request.get_path()
+	return handler.Request.GetPath()
 }
 
 func (handler *Handler) set_path(new_path string) {
-	handler.request.set_path(new_path)
+	handler.Request.SetPath(new_path)
 }
 
 func (handler *Handler) set_header(key string, value string) {
-	handler.response.Headers[key] = value
+	handler.Response.Headers[key] = value
 }
 
 func (handler *Handler) set_status(status int) {
-	handler.response.SetStatus(status)
+	handler.Response.SetStatus(status)
 }
 
 func (handler *Handler) read_request() {
@@ -70,21 +70,21 @@ func (handler *Handler) parse_start_string(start_string string) {
 		handler.set_status(400)
 		return
 	}
-	handler.request.Method.SetMethod(splited_string[0])
+	handler.Request.Method.SetMethod(splited_string[0])
 	parsed_url, err := url.Parse(splited_string[1])
 	if err != nil || !strings.HasPrefix(splited_string[2], "HTTP/") {
-		handler.set_status("bad_request")
+		handler.set_status(400)
 	}
-	handler.request.Url = parsed_url
+	handler.Request.Url = parsed_url
 }
 
 func (handler *Handler) process_request() {
-	if !handler.response.IsOk() {
+	if !handler.Response.IsOk() {
 		handler.set_content_headers(nil)
 		return
 	}
-	if !contains(constants.IMPLEMENTED_METHODS, handler.request.Method.GetMethod()) {
-		handler.set_status("method_not_allowed")
+	if !contains(constants.IMPLEMENTED_METHODS, handler.Request.Method.GetMethod()) {
+		handler.set_status(405)
 	} else {
 		handler.preprocess_path()
 	}
@@ -109,9 +109,9 @@ func (handler *Handler) check_path(is_dir bool) os.FileInfo {
 	if err != nil {
 
 		if os.IsNotExist(err) && !is_dir {
-			handler.set_status("not_found")
+			handler.set_status(404)
 		} else {
-			handler.set_status("forbidden")
+			handler.set_status(403)
 		}
 	}
 	//} else if !strings.Contains(clear_path, handler.Factory.root) {
@@ -121,7 +121,7 @@ func (handler *Handler) check_path(is_dir bool) os.FileInfo {
 }
 
 func (handler *Handler) set_content_headers(info os.FileInfo) {
-	if handler.response.IsOk() {
+	if handler.Response.IsOk() {
 		handler.set_header("Content-Length", strconv.Itoa(int(info.Size())))
 		handler.set_header("Content-Type", handler.get_content_type())
 	} else {
@@ -160,13 +160,13 @@ func (handler *Handler) clear() {
 }
 
 func (handler Handler) write_response() {
-	handler.write_string(constants.HTTP_VERSION + " " + handler.response.Status.message)
+	handler.write_string(constants.HTTP_VERSION + " " + handler.Response.Status.Message)
 	handler.write_headers()
 	handler.write_string("") // empty string after headers
-	if handler.request.Method.GetMethod() != "HEAD" {
+	if handler.Request.Method.GetMethod() != "HEAD" {
 		handler.write_body()
 	}
-	fmt.Println(handler.request.Method, " ", handler.get_path(), " ", handler.response.Status.code)
+	fmt.Println(handler.Request.Method, " ", handler.get_path(), " ", handler.Response.Status.Code)
 }
 
 func (handler *Handler) write_string(str string) {
@@ -174,7 +174,7 @@ func (handler *Handler) write_string(str string) {
 }
 
 func (handler *Handler) write_body() {
-	if handler.response.IsOk() {
+	if handler.Response.IsOk() {
 		handler.write_ok_body()
 	} else {
 		handler.write_error_body()
@@ -202,7 +202,7 @@ func (handler *Handler) write_error_body() {
 
 func (handler *Handler) get_error_body() string {
 	body := "<html><body><h1>"
-	body += handler.response.Status.Message
+	body += handler.Response.Status.Message
 	body += "</h1></body></html>"
 	return body
 }
@@ -219,7 +219,7 @@ func (handler Handler) write_common_headers() {
 }
 
 func (handler Handler) write_specific_headers() {
-	for key, value := range handler.response.Headers {
+	for key, value := range handler.Response.Headers {
 		handler.write_string(key + ": " + value)
 	}
 }

@@ -15,6 +15,6 @@ func (request *Request) GetPath() string {
 	return ""
 }
 
-func (request *Request) set_path(path string) {
+func (request *Request) SetPath(path string) {
 	request.Url.Path = path
 }
