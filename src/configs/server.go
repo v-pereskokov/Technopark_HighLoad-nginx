@@ -12,23 +12,23 @@ type Server struct {
 	Port     int    `json:"port"`
 }
 
-func (config *Config) GetNetwork() string {
-	return config.Server.Network
+func (server *Server) GetNetwork() string {
+	return server.Network
 }
 
-func (config *Config) GetProtocol() string {
-	return config.Server.Protocol
+func (server *Server) GetProtocol() string {
+	return server.Protocol
 }
 
-func (config *Config) GetHost() string {
-	return config.Server.Host
+func (server *Server) GetHost() string {
+	return server.Host
 }
 
-func (config *Config) GetPort() string {
+func (server *Server) GetPort() string {
 	port := os.Getenv("PORT")
 
 	if port == "" {
-		port = strconv.Itoa(config.Server.Port)
+		port = strconv.Itoa(server.Port)
 	}
 
 	return port
