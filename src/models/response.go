@@ -9,12 +9,12 @@ type Response struct {
 	Headers Headers
 }
 
-func (r *Response) set_status(status string) {
+func (r *Response) set_status(status int) {
 	if _, ok := constants.STATUSES[status]; ok {
 		*r.Status = constants.STATUSES[status]
 	}
 }
 
 func (r *Response) is_ok() bool {
-	return *r.Status == constants.STATUSES["ok"]
+	return *r.Status == constants.STATUSES[200]
 }

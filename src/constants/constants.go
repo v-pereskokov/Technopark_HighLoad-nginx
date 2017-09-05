@@ -3,13 +3,13 @@ package constants
 import "github.com/vladpereskokov/Technopark_HighLoad-nginx/src/models"
 
 var (
-	STATUSES = map[string]models.Status{
-		"ok":                 {Message: "200 OK", Code: 200},
-		"not_found":          {Message: "404 NOT FOUND", Code: 404},
-		"bad_request":        {Message: "400 BAD REQUEST", Code: 400},
-		"forbidden":          {Message: "403 FORBIDDEN", Code: 403},
-		"method_not_allowed": {Message: "405 METHOD NOT ALLOWED", Code: 405},
-		"not_supports":       {Message: "505 HTTP VERSION NOT SUPPORTED", Code: 505},
+	STATUSES = map[int]models.Status{
+		200: {Message: "OK", Code: 200},
+		404: {Message: "NOT FOUND", Code: 404},
+		400: {Message: "BAD REQUEST", Code: 400},
+		403: {Message: "FORBIDDEN", Code: 403},
+		405: {Message: "METHOD NOT ALLOWED", Code: 405},
+		505: {Message: "HTTP VERSION NOT SUPPORTED", Code: 505},
 	}
 	IMPLEMENTED_METHODS = []string{
 		"GET",
