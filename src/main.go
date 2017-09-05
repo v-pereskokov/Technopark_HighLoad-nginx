@@ -6,7 +6,7 @@ import (
 	"log"
 )
 
-const CONFIG = "config.json"
+const CONFIG = "configs/server.json"
 
 func main() {
 	config, err := configs.FromFile(CONFIG)
