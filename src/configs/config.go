@@ -5,4 +5,10 @@ type Config struct {
 	Dir    *Dir
 }
 
+func (config *Config) GetServer() *Server {
+	return config.Server
+}
 
+func (config *Config) GetDir() *Dir {
+	return config.Dir
+}
