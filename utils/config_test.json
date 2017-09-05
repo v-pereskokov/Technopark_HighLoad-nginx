@@ -1,6 +1,11 @@
 {
-  "network": "tcp",
-  "protocol": "http",
-  "host": "localhost",
-  "port": 2007
+  "server": {
+    "network": "tcp",
+    "protocol": "http",
+    "host": "localhost",
+    "port": 2007
+  },
+  "dir": {
+    "path": "/Users/vladislavpereskokov/Desktop/"
+  }
 }

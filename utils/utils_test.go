@@ -11,11 +11,11 @@ func TestFromFile(t *testing.T) {
 	}
 
 	if config.GetNetwork() != "tcp" {
-		t.Errorf("host don't match! %s", config.GetNetwork())
+		t.Errorf("network don't match! %s", config.GetNetwork())
 	}
 
 	if config.GetProtocol() != "http" {
-		t.Errorf("host don't match! %s", config.GetProtocol())
+		t.Errorf("protocol don't match! %s", config.GetProtocol())
 	}
 
 	if config.GetHost() != "localhost" {
@@ -24,5 +24,9 @@ func TestFromFile(t *testing.T) {
 
 	if config.GetPort() != "2007" {
 		t.Errorf("port don't match! %s", config.GetPort())
+	}
+
+	if config.GetDir() != "/Users/vladislavpereskokov/Desktop/" {
+		t.Errorf("dir don't match! %s", config.GetPort())
 	}
 }
