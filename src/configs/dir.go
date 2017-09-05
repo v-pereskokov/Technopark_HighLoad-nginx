@@ -15,10 +15,10 @@ func (dir *Dir) findDir() {
 	}
 }
 
-func (config *Config) GetDir() string {
-	config.Dir.findDir()
+func (dir *Dir) GetDir() string {
+	dir.findDir()
 
-	fmt.Println(config.Dir.Path)
+	fmt.Println(dir.Path)
 
-	return config.Dir.Path
+	return dir.Path
 }
