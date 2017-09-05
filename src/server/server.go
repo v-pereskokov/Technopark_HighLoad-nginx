@@ -2,7 +2,7 @@ package server
 
 import (
 	"fmt"
-	"github.com/vladpereskokov/Technopark_HighLoad-nginx/configs"
+	"github.com/vladpereskokov/Technopark_HighLoad-nginx/src/configs"
 	"log"
 	"net"
 	"os"

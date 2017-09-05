@@ -1,8 +1,8 @@
 package main
 
 import (
-	"github.com/vladpereskokov/Technopark_HighLoad-nginx/configs"
-	"github.com/vladpereskokov/Technopark_HighLoad-nginx/server"
+	"github.com/vladpereskokov/Technopark_HighLoad-nginx/src/configs"
+	"github.com/vladpereskokov/Technopark_HighLoad-nginx/src/server"
 	"log"
 )
 

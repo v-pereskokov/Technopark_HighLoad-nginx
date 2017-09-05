@@ -1,6 +1,6 @@
 package configs
 
-import "github.com/vladpereskokov/Technopark_HighLoad-nginx/utils"
+import "github.com/vladpereskokov/Technopark_HighLoad-nginx/src/utils"
 
 type Dir struct {
 	Path string `json:"path"`

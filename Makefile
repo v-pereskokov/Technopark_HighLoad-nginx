@@ -3,4 +3,4 @@
 all: test
 
 test:
-	go test ./configs
+	go test ./src/configs
