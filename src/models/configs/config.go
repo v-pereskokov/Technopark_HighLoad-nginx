@@ -5,7 +5,7 @@ import modelServer "github.com/vladpereskokov/Technopark_HighLoad-nginx/src/mode
 type Config struct {
 	Server   *Server
 	Dir      *Dir
-	Statuses *Statuses
+	Statuses *modelServer.Statuses
 }
 
 func (config *Config) GetServer() *Server {
@@ -14,8 +14,4 @@ func (config *Config) GetServer() *Server {
 
 func (config *Config) GetDir() *Dir {
 	return config.Dir
-}
-
-type Statuses struct {
-	Status []modelServer.Status `json:"status"`
 }

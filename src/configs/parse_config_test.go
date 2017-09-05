@@ -1,8 +1,8 @@
 package configs
 
 import (
-	"fmt"
 	modelConfig "github.com/vladpereskokov/Technopark_HighLoad-nginx/src/models/configs"
+	modelServer "github.com/vladpereskokov/Technopark_HighLoad-nginx/src/models/server"
 	"strings"
 	"testing"
 )
@@ -14,18 +14,12 @@ const (
 )
 
 func TestFromTop(t *testing.T) {
-	config := new(modelConfig.Statuses)
+	config := new(modelServer.Statuses)
 
 	err := FromFile(FILE_3, &config)
 	if err != nil {
 		t.Errorf("%v\n", err.Error())
 	}
-
-	fmt.Printf("\n")
-	fmt.Printf("%v", config.Status[0].Code)
-	t.Error("hey")
-	fmt.Printf("\n")
-	fmt.Printf("\n")
 }
 
 func TestFromFileFirst(t *testing.T) {
