@@ -38,7 +38,6 @@ func (server *Server) Start(config *modelConfig.Config) {
 	}
 
 	for {
-		// Listen for an incoming connection.
 		conn, err := listener.Accept()
 		if err != nil {
 			fmt.Println("Error accepting: ", err.Error())
