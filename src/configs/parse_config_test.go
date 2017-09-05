@@ -9,7 +9,6 @@ import (
 const (
 	FILE_1 = "../../test_configs/config_test_1.json"
 	FILE_2 = "../../test_configs/config_test_2.json"
-	FILE_3 = "../../test_configs/config_test_3.json"
 )
 
 func TestFromFileFirst(t *testing.T) {
