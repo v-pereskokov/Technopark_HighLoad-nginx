@@ -6,32 +6,32 @@ import (
 )
 
 type Config struct {
-	server *Server
-	dir    *Dir
+	Server *Server
+	Dir    *Dir
 }
 
 func (config *Config) GetNetwork() string {
-	return config.server.Network
+	return config.Server.Network
 }
 
 func (config *Config) GetProtocol() string {
-	return config.server.Protocol
+	return config.Server.Protocol
 }
 
 func (config *Config) GetHost() string {
-	return config.server.Host
+	return config.Server.Host
 }
 
 func (config *Config) GetPort() string {
 	port := os.Getenv("PORT")
 
 	if port == "" {
-		port = strconv.Itoa(config.server.Port)
+		port = strconv.Itoa(config.Server.Port)
 	}
 
 	return port
 }
 
 func (config *Config) GetDir() string {
-	return config.dir.Path
+	return config.Dir.Path
 }
