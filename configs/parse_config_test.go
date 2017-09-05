@@ -1,8 +1,8 @@
 package configs
 
 import (
-	"testing"
 	"strings"
+	"testing"
 )
 
 const file_1 = "config_test_1.json"
@@ -58,6 +58,6 @@ func TestFromFileSecond(t *testing.T) {
 	}
 
 	if !strings.Contains(config.GetDir(), "github.com/vladpereskokov/Technopark_HighLoad-nginx/") {
-		t.Errorf("dir don't match! %s", config.GetPort())
+		t.Errorf("pwd dir don't match! %s", config.GetPort())
 	}
 }
