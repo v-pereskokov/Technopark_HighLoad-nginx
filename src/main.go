@@ -2,7 +2,7 @@ package main
 
 import (
 	"github.com/vladpereskokov/Technopark_HighLoad-nginx/src/configs"
-	"github.com/vladpereskokov/Technopark_HighLoad-nginx/src/models"
+	modelConfig "github.com/vladpereskokov/Technopark_HighLoad-nginx/src/models/configs"
 	"github.com/vladpereskokov/Technopark_HighLoad-nginx/src/server"
 	"log"
 )
@@ -10,7 +10,7 @@ import (
 const CONFIG = "configs/server.json"
 
 func main() {
-	config := new(models.Config)
+	config := new(modelConfig.Config)
 
 	err := configs.FromFile(CONFIG, &config)
 	if err != nil {

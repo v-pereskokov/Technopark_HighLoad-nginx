@@ -3,7 +3,7 @@ package server
 import (
 	"fmt"
 	"github.com/vladpereskokov/Technopark_HighLoad-nginx/src/handler"
-	"github.com/vladpereskokov/Technopark_HighLoad-nginx/src/models"
+	modelConfig "github.com/vladpereskokov/Technopark_HighLoad-nginx/src/models/configs"
 	"log"
 	"net"
 	"os"
@@ -16,7 +16,7 @@ type Server struct {
 	port     string
 }
 
-func (server *Server) Start(config *models.Config) {
+func (server *Server) Start(config *modelConfig.Config) {
 	serverConf := config.GetServer()
 
 	listener, err := net.Listen(serverConf.GetNetwork(), ":"+serverConf.GetPort())
