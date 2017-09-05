@@ -3,10 +3,6 @@
     {
       "code": 200,
       "message": "Ok"
-    },
-    {
-      "code": 400,
-      "message": "Bad request"
     }
   ]
 }

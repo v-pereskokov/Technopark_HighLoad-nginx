@@ -13,15 +13,6 @@ const (
 	FILE_3 = "../../test_configs/config_test_3.json"
 )
 
-func TestFromTop(t *testing.T) {
-	config := new(modelServer.Statuses)
-
-	err := FromFile(FILE_3, &config)
-	if err != nil {
-		t.Errorf("%v\n", err.Error())
-	}
-}
-
 func TestFromFileFirst(t *testing.T) {
 	config := new(modelConfig.Config)
 
@@ -83,5 +74,20 @@ func TestFromFileSecond(t *testing.T) {
 
 	if !strings.Contains(dirConfig.GetDir(), "github.com/vladpereskokov/Technopark_HighLoad-nginx/") {
 		t.Errorf("pwd dir don't match! %s", dirConfig.GetDir())
+	}
+}
+
+func TestFromFileThird(t *testing.T) {
+	config := new(modelServer.Statuses)
+
+	err := FromFile(FILE_3, &config)
+	if err != nil {
+		t.Errorf("%v\n", err.Error())
+	}
+
+	for _, value := range config.Status {
+		if value.Code != 200 || value.Message != "Ok" {
+			t.Error("Don't work")
+		}
 	}
 }
