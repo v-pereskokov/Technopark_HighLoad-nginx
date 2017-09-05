@@ -19,6 +19,7 @@ type Handler struct {
 	Connection net.Conn
 	Request    *models.Request
 	Response   *models.Response
+	Dir        string
 }
 
 func (handler *Handler) Start(channel chan net.Conn) {
