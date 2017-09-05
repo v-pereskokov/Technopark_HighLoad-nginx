@@ -31,8 +31,8 @@ func (server *Server) Start(config *configs.Config) {
 	handle := handler.Handler{}
 
 	for i := 0; i < 4; i++ {
-		println("Created worker...")
 		go handle.Start(ch)
+		println("Created worker...")
 	}
 
 	for {
