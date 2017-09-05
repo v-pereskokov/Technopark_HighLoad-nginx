@@ -21,8 +21,6 @@ func fromReader(r []byte) (*configs.Config, error) {
 	config := new(configs.Config)
 	err := json.Unmarshal(r, &config)
 
-	fmt.Printf("%s", r)
-
 	if err != nil {
 		return config, fmt.Errorf("can not parse config: %v", err)
 	}
