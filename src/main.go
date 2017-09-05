@@ -15,5 +15,5 @@ func main() {
 	}
 
 	httpServer := server.Server{}
-	httpServer.Start(config)
+	httpServer.Start(config.(*configs.Config))
 }

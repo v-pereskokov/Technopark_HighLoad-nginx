@@ -6,7 +6,7 @@ import (
 	"io/ioutil"
 )
 
-func FromFile(filename string) (*Config, error) {
+func FromFile(filename string) (interface{}, error) {
 	file, err := ioutil.ReadFile(filename)
 
 	if err != nil {
