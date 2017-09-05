@@ -12,19 +12,6 @@ const (
 	FILE_3 = "../../test_configs/config_test_3.json"
 )
 
-func TestFromFileTest(t *testing.T) {
-	config := new(modelConfig.Test)
-
-	err := FromFile(FILE_3, &config)
-	if err != nil {
-		t.Errorf("%v\n", err.Error())
-	}
-
-	if config.Test != "top" {
-		t.Errorf("%v\n", config.Test)
-	}
-}
-
 func TestFromFileFirst(t *testing.T) {
 	config := new(modelConfig.Config)
 
