@@ -3,18 +3,18 @@ package models
 import "net/url"
 
 type Request struct {
-	method *Method
-	url    *url.URL
+	Method *Method
+	Url    *url.URL
 }
 
 func (request *Request) GetPath() string {
-	if request.url != nil {
-		return request.url.Path
+	if request.Url != nil {
+		return request.Url.Path
 	}
 
 	return ""
 }
 
 func (request *Request) set_path(path string) {
-	request.url.Path = path
+	request.Url.Path = path
 }

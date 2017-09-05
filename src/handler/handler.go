@@ -1,18 +1,18 @@
 package handler
 
 import (
-	"fmt"
-	"net"
-	"github.com/vladpereskokov/Technopark_HighLoad-nginx/src/models"
-	"strings"
+	"bufio"
 	"bytes"
+	"fmt"
+	"github.com/vladpereskokov/Technopark_HighLoad-nginx/src/constants"
+	"github.com/vladpereskokov/Technopark_HighLoad-nginx/src/models"
+	"net"
 	"net/url"
 	"os"
 	"path"
 	"strconv"
-	"bufio"
+	"strings"
 	"time"
-	"github.com/vladpereskokov/Technopark_HighLoad-nginx/src/constants"
 )
 
 type Handler struct {
@@ -45,11 +45,11 @@ func (handler *Handler) set_path(new_path string) {
 }
 
 func (handler *Handler) set_header(key string, value string) {
-	handler.response.headers[key] = value
+	handler.response.Headers[key] = value
 }
 
-func (handler *Handler) set_status(status string) {
-	handler.response.set_status(status)
+func (handler *Handler) set_status(status int) {
+	handler.response.SetStatus(status)
 }
 
 func (handler *Handler) read_request() {
@@ -59,7 +59,7 @@ func (handler *Handler) read_request() {
 		fmt.Println("Read request error ", err)
 	}
 	raw_request := string(buffer[:bytes.Index(buffer, []byte{0})])
-	start_string := strings.Split(raw_request, STRING_SEPARATOR)[0]
+	start_string := strings.Split(raw_request, constants.STRING_SEPARATOR)[0]
 	fmt.Println(start_string)
 	handler.parse_start_string(start_string)
 }
@@ -67,23 +67,23 @@ func (handler *Handler) read_request() {
 func (handler *Handler) parse_start_string(start_string string) {
 	splited_string := strings.Split(start_string, " ")
 	if len(splited_string) != 3 {
-		handler.set_status("bad_request")
+		handler.set_status(400)
 		return
 	}
-	handler.request.method = splited_string[0]
+	handler.request.Method.SetMethod(splited_string[0])
 	parsed_url, err := url.Parse(splited_string[1])
 	if err != nil || !strings.HasPrefix(splited_string[2], "HTTP/") {
 		handler.set_status("bad_request")
 	}
-	handler.request.url = parsed_url
+	handler.request.Url = parsed_url
 }
 
 func (handler *Handler) process_request() {
-	if !handler.response.is_ok() {
+	if !handler.response.IsOk() {
 		handler.set_content_headers(nil)
 		return
 	}
-	if !contains(IMPLEMENTED_METHODS, handler.request.method) {
+	if !contains(constants.IMPLEMENTED_METHODS, handler.request.Method.GetMethod()) {
 		handler.set_status("method_not_allowed")
 	} else {
 		handler.preprocess_path()
@@ -92,10 +92,10 @@ func (handler *Handler) process_request() {
 
 //preproccess path and check file errors
 func (handler *Handler) preprocess_path() {
-	handler.set_path(handler.Factory.root + handler.get_path())
+	//handler.set_path(handler.Factory.root + handler.get_path())
 	file_info := handler.check_path(false)
 	if file_info != nil && file_info.IsDir() {
-		handler.set_path(handler.get_path() + INDEX_FILE)
+		handler.set_path(handler.get_path() + constants.INDEX_FILE)
 		file_info = handler.check_path(true)
 	}
 	handler.set_content_headers(file_info)
@@ -107,25 +107,26 @@ func (handler *Handler) check_path(is_dir bool) os.FileInfo {
 	handler.set_path(clear_path)
 	info, err := os.Stat(request_path)
 	if err != nil {
-		
+
 		if os.IsNotExist(err) && !is_dir {
 			handler.set_status("not_found")
 		} else {
 			handler.set_status("forbidden")
 		}
-	} else if !strings.Contains(clear_path, handler.Factory.root) {
-		handler.set_status("forbidden")
 	}
+	//} else if !strings.Contains(clear_path, handler.Factory.root) {
+	//	handler.set_status("forbidden")
+	//}
 	return info
 }
 
 func (handler *Handler) set_content_headers(info os.FileInfo) {
-	if handler.response.is_ok() {
+	if handler.response.IsOk() {
 		handler.set_header("Content-Length", strconv.Itoa(int(info.Size())))
 		handler.set_header("Content-Type", handler.get_content_type())
 	} else {
 		handler.set_header("Content-Length", strconv.Itoa(len(handler.get_error_body())))
-		handler.set_header("Content-Type", ERROR_BODY_MIME_TYPE)
+		handler.set_header("Content-Type", constants.ERROR_BODY_MIME_TYPE)
 	}
 }
 
@@ -145,35 +146,35 @@ func (handler *Handler) get_content_type() string {
 	if last_dot >= 0 {
 		extension = request_path[last_dot:]
 	}
-	val, ok := CONTENT_TYPES[extension]
+	val, ok := constants.CONTENT_TYPES[extension]
 	if ok {
 		return val
 	} else {
-		return DEFAULT_MIME_TYPE
+		return constants.DEFAULT_MIME_TYPE
 	}
 }
 
 func (handler *Handler) clear() {
-	handler.Factory = nil
+	//handler.Factory = nil
 	handler.Connection.Close()
 }
 
 func (handler Handler) write_response() {
-	handler.write_string(HTTP_VERSION + " " + handler.response.status.message)
+	handler.write_string(constants.HTTP_VERSION + " " + handler.response.Status.message)
 	handler.write_headers()
 	handler.write_string("") // empty string after headers
-	if handler.request.method != "HEAD" {
+	if handler.request.Method.GetMethod() != "HEAD" {
 		handler.write_body()
 	}
-	fmt.Println(handler.request.method, " ", handler.get_path(), " ", handler.response.status.code)
+	fmt.Println(handler.request.Method, " ", handler.get_path(), " ", handler.response.Status.code)
 }
 
 func (handler *Handler) write_string(str string) {
-	handler.Connection.Write([]byte(str + STRING_SEPARATOR))
+	handler.Connection.Write([]byte(str + constants.STRING_SEPARATOR))
 }
 
 func (handler *Handler) write_body() {
-	if handler.response.is_ok() {
+	if handler.response.IsOk() {
 		handler.write_ok_body()
 	} else {
 		handler.write_error_body()
@@ -201,7 +202,7 @@ func (handler *Handler) write_error_body() {
 
 func (handler *Handler) get_error_body() string {
 	body := "<html><body><h1>"
-	body += handler.response.status.message
+	body += handler.response.Status.Message
 	body += "</h1></body></html>"
 	return body
 }
@@ -229,4 +230,3 @@ func (handler *Handler) Handle() {
 	handler.write_response()
 	handler.clear()
 }
-
