@@ -6,5 +6,5 @@ type Status struct {
 }
 
 type Statuses struct {
-	Status []Status `json:"status"`
+	Content []Status `json:"status"`
 }

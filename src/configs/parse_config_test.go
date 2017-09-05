@@ -11,6 +11,7 @@ const (
 	FILE_1 = "../../test_configs/config_test_1.json"
 	FILE_2 = "../../test_configs/config_test_2.json"
 	FILE_3 = "../../test_configs/config_test_3.json"
+	FILE_4 = "../../test_configs/config_test_4.json"
 )
 
 func TestFromFileFirst(t *testing.T) {
@@ -85,8 +86,23 @@ func TestFromFileThird(t *testing.T) {
 		t.Errorf("%v\n", err.Error())
 	}
 
-	for _, value := range config.Status {
+	for _, value := range config.Content {
 		if value.Code != 200 || value.Message != "Ok" {
+			t.Error("Don't work")
+		}
+	}
+}
+
+func TestFromFileMethods(t *testing.T) {
+	config := new(modelServer.Methods)
+
+	err := FromFile(FILE_4, &config)
+	if err != nil {
+		t.Errorf("%v\n", err.Error())
+	}
+
+	for _, value := range config.Content {
+		if value.Type != "GET" {
 			t.Error("Don't work")
 		}
 	}

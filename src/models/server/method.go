@@ -1,13 +1,17 @@
 package server
 
 type Method struct {
-	value string
+	Type string `json:"type"`
 }
 
 func (method *Method) SetMethod(value string) {
-	method.value = value
+	method.Type = value
 }
 
 func (method *Method) GetMethod() string {
-	return method.value
+	return method.Type
+}
+
+type Methods struct {
+	Content []Method `json:"methods"`
 }
