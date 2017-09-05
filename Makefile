@@ -3,4 +3,4 @@
 all: test
 
 test:
-	go test ./utils
+	go test ./configs
