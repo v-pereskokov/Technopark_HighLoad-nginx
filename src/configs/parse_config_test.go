@@ -1,6 +1,7 @@
 package configs
 
 import (
+	"github.com/vladpereskokov/Technopark_HighLoad-nginx/src/models"
 	"strings"
 	"testing"
 )
@@ -12,7 +13,7 @@ const (
 )
 
 func TestFromFileTest(t *testing.T) {
-	config := new(Test)
+	config := new(models.Test)
 
 	err := FromFile(FILE_3, &config)
 	if err != nil {
@@ -25,7 +26,7 @@ func TestFromFileTest(t *testing.T) {
 }
 
 func TestFromFileFirst(t *testing.T) {
-	config := new(Config)
+	config := new(models.Config)
 
 	err := FromFile(FILE_1, &config)
 	if err != nil {
@@ -57,7 +58,7 @@ func TestFromFileFirst(t *testing.T) {
 }
 
 func TestFromFileSecond(t *testing.T) {
-	config := new(Config)
+	config := new(models.Config)
 
 	err := FromFile(FILE_2, &config)
 	if err != nil {

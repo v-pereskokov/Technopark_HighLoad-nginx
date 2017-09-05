@@ -2,8 +2,8 @@ package server
 
 import (
 	"fmt"
-	"github.com/vladpereskokov/Technopark_HighLoad-nginx/src/configs"
 	"github.com/vladpereskokov/Technopark_HighLoad-nginx/src/handler"
+	"github.com/vladpereskokov/Technopark_HighLoad-nginx/src/models"
 	"log"
 	"net"
 	"os"
@@ -16,15 +16,17 @@ type Server struct {
 	port     string
 }
 
-func (server *Server) Start(config *configs.Config) {
-	listener, err := net.Listen(config.GetNetwork(), ":"+config.GetPort())
+func (server *Server) Start(config *models.Config) {
+	serverConf := config.GetServer()
+
+	listener, err := net.Listen(serverConf.GetNetwork(), ":"+serverConf.GetPort())
 	if err != nil {
 		panic("Failed start server: " + err.Error())
 	}
 
 	defer listener.Close()
 
-	log.Print("Server started at " + config.GetPort() + " port")
+	log.Print("Server started at " + serverConf.GetPort() + " port")
 
 	ch := make(chan net.Conn)
 

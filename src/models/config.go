@@ -1,4 +1,4 @@
-package configs
+package models
 
 type Config struct {
 	Server *Server
