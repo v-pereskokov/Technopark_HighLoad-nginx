@@ -6,23 +6,22 @@ import (
 	"io/ioutil"
 )
 
-func FromFile(filename string) (*Config, error) {
+func FromFile(filename string, object interface{}) error {
 	file, err := ioutil.ReadFile(filename)
 
 	if err != nil {
-		return &Config{}, fmt.Errorf("can not open file: %v", err)
+		return fmt.Errorf("can not open file: %v", err)
 	}
 
-	return fromReader(file)
+	return fromReader(file, &object)
 }
 
-func fromReader(r []byte) (*Config, error) {
-	config := new(Config)
-	err := json.Unmarshal(r, &config)
+func fromReader(r []byte, object *interface{}) error {
+	err := json.Unmarshal(r, &object)
 
 	if err != nil {
-		return config, fmt.Errorf("can not parse config: %v", err)
+		return fmt.Errorf("can not parse config: %v", err)
 	}
 
-	return config, nil
+	return nil
 }

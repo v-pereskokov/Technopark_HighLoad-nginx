@@ -11,7 +11,9 @@ const (
 )
 
 func TestFromFileFirst(t *testing.T) {
-	config, err := FromFile(FILE_1)
+	config := new(Config)
+
+	err := FromFile(FILE_1, &config)
 	if err != nil {
 		t.Errorf("%v\n", err.Error())
 	}
@@ -41,7 +43,9 @@ func TestFromFileFirst(t *testing.T) {
 }
 
 func TestFromFileSecond(t *testing.T) {
-	config, err := FromFile(FILE_2)
+	config := new(Config)
+
+	err := FromFile(FILE_2, &config)
 	if err != nil {
 		t.Errorf("%v\n", err.Error())
 	}
