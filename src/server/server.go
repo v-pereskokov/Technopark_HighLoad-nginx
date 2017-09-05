@@ -3,6 +3,7 @@ package server
 import (
 	"fmt"
 	"github.com/vladpereskokov/Technopark_HighLoad-nginx/src/configs"
+	"github.com/vladpereskokov/Technopark_HighLoad-nginx/src/handler"
 	"log"
 	"net"
 	"os"
@@ -27,9 +28,11 @@ func (server *Server) Start(config *configs.Config) {
 
 	ch := make(chan net.Conn)
 
+	handle := handler.Handler{}
+
 	for i := 0; i < 4; i++ {
 		println("Created worker...")
-		go handleConnection(ch)
+		go handle.Start(ch)
 	}
 
 	for {
@@ -39,39 +42,7 @@ func (server *Server) Start(config *configs.Config) {
 			fmt.Println("Error accepting: ", err.Error())
 			os.Exit(1)
 		}
-		//// Handle connections in a new goroutine.
-		//go handleRequest(conn)
 
 		ch <- conn
 	}
-}
-
-func handleConnection(ch chan net.Conn) {
-	for {
-		conn := <-ch
-		buf := make([]byte, 1024)
-		// Read the incoming connection into the buffer.
-		_, err := conn.Read(buf)
-		if err != nil {
-			fmt.Println("Error reading:", err.Error())
-		}
-		// Send a response back to person contacting us.
-		conn.Write([]byte("Message received."))
-		// Close the connection when you're done with it.
-		conn.Close()
-	}
-}
-
-func handleRequest(conn net.Conn) {
-	// Make a buffer to hold incoming data.
-	buf := make([]byte, 1024)
-	// Read the incoming connection into the buffer.
-	_, err := conn.Read(buf)
-	if err != nil {
-		fmt.Println("Error reading:", err.Error())
-	}
-	// Send a response back to person contacting us.
-	conn.Write([]byte("Message received."))
-	// Close the connection when you're done with it.
-	conn.Close()
 }
