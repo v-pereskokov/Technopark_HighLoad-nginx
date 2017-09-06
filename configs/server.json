@@ -30,14 +30,6 @@
       "message": "Method not allowed"
     }
   ],
-  "methods": [
-    {
-      "type": "GET"
-    },
-    {
-      "type": "HEAD"
-    }
-  ],
   "content_type": [
     {
       "expansion": ".css",
