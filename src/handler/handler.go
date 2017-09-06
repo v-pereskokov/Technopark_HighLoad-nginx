@@ -15,7 +15,24 @@ type Handler struct {
 
 func (handler *Handler) Start(channel chan net.Conn) {
 	for {
-		conn := <-channel
+		handler.handle(<-channel)
+	}
+}
+
+func CreateHandler(dir string) (handler Handler) {
+	handler.Request = new(modelServer.Request)
+
+	handler.Response = new(modelServer.Response)
+	handler.Response.Status = new(modelServer.Status)
+	handler.Response.Headers = make(map[string]string)
+
+	handler.Dir = dir
+
+	return
+}
+
+func (handler *Handler) handle(conn net.Conn) {
+	for {
 		buf := make([]byte, 1024)
 
 		_, err := conn.Read(buf)
