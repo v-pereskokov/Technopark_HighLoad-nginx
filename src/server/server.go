@@ -6,7 +6,6 @@ import (
 	modelConfig "github.com/vladpereskokov/Technopark_HighLoad-nginx/src/models/configs"
 	"log"
 	"net"
-	"os"
 	"strconv"
 )
 
