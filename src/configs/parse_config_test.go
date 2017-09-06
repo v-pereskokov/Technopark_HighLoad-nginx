@@ -8,11 +8,11 @@ import (
 )
 
 const (
-	FILE_1 = "../../test_configs/config_test_1.json"
-	FILE_2 = "../../test_configs/config_test_2.json"
-	FILE_3 = "../../test_configs/config_test_3.json"
-	FILE_4 = "../../test_configs/config_test_4.json"
-	FILE_5 = "../../test_configs/config_test_5.json"
+	FILE_1 = "../../configs/test_configs/config_test_1.json"
+	FILE_2 = "../../configs/test_configs/config_test_2.json"
+	FILE_3 = "../../configs/test_configs/config_test_3.json"
+	FILE_4 = "../../configs/test_configs/config_test_4.json"
+	FILE_5 = "../../configs/test_configs/config_test_5.json"
 )
 
 func TestFromFileFirst(t *testing.T) {
