@@ -56,7 +56,7 @@ func (server *Server) Start() {
 			ch <- conn
 		}
 	} else {
-		panic("hop hey lalaley")
+		panic("Server is not setup")
 	}
 }
 
