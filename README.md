@@ -13,7 +13,7 @@
 ```go
   go run ./src/main.go
 ```  
-**Or**  
+***Or***  
 ```bash
   make run
 ```
