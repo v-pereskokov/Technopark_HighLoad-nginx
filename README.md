@@ -7,6 +7,12 @@
 * Go lang
 * Travis CI [tests]
 
+### Clone
+
+```bash
+  git clone [this repo] $GOPATH/github.com/vladpereskokov
+```
+
 ### Run
 
 
