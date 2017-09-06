@@ -50,7 +50,8 @@ func (server *Server) Start() {
 			conn, err := listener.Accept()
 			if err != nil {
 				fmt.Println("Error accepting: ", err.Error())
-				os.Exit(1)
+
+				continue
 			}
 
 			ch <- conn
