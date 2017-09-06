@@ -7,6 +7,7 @@ import (
 	"log"
 	"net"
 	"os"
+	"strconv"
 )
 
 type Server struct {
@@ -21,39 +22,41 @@ func (server *Server) CreateServer(config modelConfig.Server) {
 	server.setNetwork(config.Network)
 	server.setProtocol(config.Protocol)
 	server.setHost(config.Host)
-	server.setPort(string(config.Port))
-
+	server.setPort(strconv.Itoa(config.Port))
+	server.setSetup(true)
 }
 
-func (server *Server) Start(config *modelConfig.Config) {
-	serverConf := config.GetServer()
-
-	listener, err := net.Listen(serverConf.GetNetwork(), ":"+serverConf.GetPort())
-	if err != nil {
-		panic("Failed start server: " + err.Error())
-	}
-
-	defer listener.Close()
-
-	log.Print("Server started at " + serverConf.GetPort() + " port")
-
-	ch := make(chan net.Conn)
-
-	handle := handler.Handler{}
-
-	for i := 0; i < 4; i++ {
-		go handle.Start(ch)
-		println("Created worker...")
-	}
-
-	for {
-		conn, err := listener.Accept()
+func (server *Server) Start() {
+	if server.IsSetup {
+		listener, err := net.Listen(server.Network, ":"+server.Port)
 		if err != nil {
-			fmt.Println("Error accepting: ", err.Error())
-			os.Exit(1)
+			panic("Failed start server: " + err.Error())
 		}
 
-		ch <- conn
+		defer listener.Close()
+
+		log.Print("Server started at " + server.Port + " port")
+
+		ch := make(chan net.Conn)
+
+		handle := handler.Handler{}
+
+		for i := 0; i < 4; i++ {
+			go handle.Start(ch)
+			println("Created worker...")
+		}
+
+		for {
+			conn, err := listener.Accept()
+			if err != nil {
+				fmt.Println("Error accepting: ", err.Error())
+				os.Exit(1)
+			}
+
+			ch <- conn
+		}
+	} else {
+		panic("hop hey lalaley")
 	}
 }
 
