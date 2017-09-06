@@ -13,5 +13,5 @@ func (method *Method) GetMethod() string {
 }
 
 type Methods struct {
-	Content []Method `json:"methods"`
+	Content []Method `json:"http_methods"`
 }
