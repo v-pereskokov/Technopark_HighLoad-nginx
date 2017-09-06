@@ -6,6 +6,7 @@ go:
 branches:
   only:
   - develop
+  - master
 
 script:
   - make
