@@ -10,11 +10,11 @@ import (
 )
 
 type Server struct {
-	network  string
-	protocol string
-	host     string
-	port     string
-	isSetup  bool
+	Network  string
+	Protocol string
+	Host     string
+	Port     string
+	IsSetup  bool
 }
 
 func (server *Server) CreateServer(config modelConfig.Server) {
@@ -58,21 +58,21 @@ func (server *Server) Start(config *modelConfig.Config) {
 }
 
 func (server *Server) setNetwork(network string) {
-	server.network = network
+	server.Network = network
 }
 
 func (server *Server) setProtocol(protocol string) {
-	server.protocol = protocol
+	server.Protocol = protocol
 }
 
 func (server *Server) setHost(host string) {
-	server.host = host
+	server.Host = host
 }
 
 func (server *Server) setPort(port string) {
-	server.port = port
+	server.Port = port
 }
 
 func (server *Server) setSetup(isSetup bool) {
-	server.isSetup = isSetup
+	server.IsSetup = isSetup
 }
