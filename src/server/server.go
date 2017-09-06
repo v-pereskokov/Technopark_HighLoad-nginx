@@ -14,6 +14,15 @@ type Server struct {
 	protocol string
 	host     string
 	port     string
+	isSetup  bool
+}
+
+func (server *Server) CreateServer(config modelConfig.Server) {
+	server.setNetwork(config.Network)
+	server.setProtocol(config.Protocol)
+	server.setHost(config.Host)
+	server.setPort(string(config.Port))
+
 }
 
 func (server *Server) Start(config *modelConfig.Config) {
@@ -46,4 +55,24 @@ func (server *Server) Start(config *modelConfig.Config) {
 
 		ch <- conn
 	}
+}
+
+func (server *Server) setNetwork(network string) {
+	server.network = network
+}
+
+func (server *Server) setProtocol(protocol string) {
+	server.protocol = protocol
+}
+
+func (server *Server) setHost(host string) {
+	server.host = host
+}
+
+func (server *Server) setPort(port string) {
+	server.port = port
+}
+
+func (server *Server) setSetup(isSetup bool) {
+	server.isSetup = isSetup
 }
