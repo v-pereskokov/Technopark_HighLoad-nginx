@@ -54,7 +54,7 @@ func (server *Server) Start(handle handler.HandlerFunc) {
 			ch <- conn
 		}
 	} else {
-		panic("Server is not setup")
+		panic("server is not setup")
 	}
 }
 
