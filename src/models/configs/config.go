@@ -1,13 +1,8 @@
 package configs
 
-import modelServer "github.com/vladpereskokov/Technopark_HighLoad-nginx/src/models/server"
-
 type Config struct {
-	Server       *Server
-	Dir          *Dir
-	Statuses     *modelServer.Statuses
-	Methods      *modelServer.Methods
-	ContentTypes *modelServer.ContentTypes
+	Server *Server
+	Dir    *Dir
 }
 
 func (config *Config) GetServer() *Server {
@@ -16,16 +11,4 @@ func (config *Config) GetServer() *Server {
 
 func (config *Config) GetDir() *Dir {
 	return config.Dir
-}
-
-func (config *Config) GetStatuses() *modelServer.Statuses {
-	return config.Statuses
-}
-
-func (config *Config) GetMethods() *modelServer.Methods {
-	return config.Methods
-}
-
-func (config *Config) GetTypes() *modelServer.ContentTypes {
-	return config.ContentTypes
 }
