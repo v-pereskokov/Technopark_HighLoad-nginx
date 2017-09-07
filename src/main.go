@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/vladpereskokov/Technopark_HighLoad-nginx/src/configs"
+	"github.com/vladpereskokov/Technopark_HighLoad-nginx/src/handler"
 	modelConfig "github.com/vladpereskokov/Technopark_HighLoad-nginx/src/models/configs"
 	"github.com/vladpereskokov/Technopark_HighLoad-nginx/src/server"
 	"log"
@@ -20,5 +21,5 @@ func main() {
 	httpServer := server.Server{}
 
 	httpServer.CreateServer(*config.GetServer())
-	httpServer.Start()
+	httpServer.Start(handler.CreateHandler(config.Dir.Path))
 }
