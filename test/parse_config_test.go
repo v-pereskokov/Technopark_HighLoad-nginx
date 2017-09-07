@@ -1,9 +1,9 @@
 package test
 
 import (
-	"github.com/vladpereskokov/Technopark_HighLoad-nginx/src/configs"
 	modelConfig "github.com/vladpereskokov/Technopark_HighLoad-nginx/src/models/configs"
 	modelServer "github.com/vladpereskokov/Technopark_HighLoad-nginx/src/models/server"
+	"github.com/vladpereskokov/Technopark_HighLoad-nginx/src/utils"
 	"strings"
 	"testing"
 )
@@ -19,7 +19,7 @@ const (
 func TestFromFileFirst(t *testing.T) {
 	config := new(modelConfig.Config)
 
-	err := configs.FromFile(FILE_1, &config)
+	err := utils.FromFile(FILE_1, &config)
 	if err != nil {
 		t.Errorf("%v\n", err.Error())
 	}
@@ -51,7 +51,7 @@ func TestFromFileFirst(t *testing.T) {
 func TestFromFileSecond(t *testing.T) {
 	config := new(modelConfig.Config)
 
-	err := configs.FromFile(FILE_2, &config)
+	err := utils.FromFile(FILE_2, &config)
 	if err != nil {
 		t.Errorf("%v\n", err.Error())
 	}
@@ -83,7 +83,7 @@ func TestFromFileSecond(t *testing.T) {
 func TestFromFileThird(t *testing.T) {
 	config := new(modelServer.Statuses)
 
-	err := configs.FromFile(FILE_3, &config)
+	err := utils.FromFile(FILE_3, &config)
 	if err != nil {
 		t.Errorf("%v\n", err.Error())
 	}
@@ -98,7 +98,7 @@ func TestFromFileThird(t *testing.T) {
 func TestFromFileFourth(t *testing.T) {
 	config := new(modelServer.Methods)
 
-	err := configs.FromFile(FILE_4, &config)
+	err := utils.FromFile(FILE_4, &config)
 	if err != nil {
 		t.Errorf("%v\n", err.Error())
 	}
@@ -113,7 +113,7 @@ func TestFromFileFourth(t *testing.T) {
 func TestFromFileFifth(t *testing.T) {
 	config := new(modelServer.ContentTypes)
 
-	err := configs.FromFile(FILE_5, &config)
+	err := utils.FromFile(FILE_5, &config)
 	if err != nil {
 		t.Errorf("%v\n", err.Error())
 	}
