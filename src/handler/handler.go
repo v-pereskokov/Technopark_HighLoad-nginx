@@ -13,10 +13,6 @@ type Handler struct {
 	Dir        string
 }
 
-func (handler *Handler) Start(channel chan net.Conn) {
-	go handler.handle(channel)
-}
-
 func CreateHandler(dir string) (handlerFunc HandlerFunc) {
 	handler := Handler{}
 	handler.Request = new(modelServer.Request)
