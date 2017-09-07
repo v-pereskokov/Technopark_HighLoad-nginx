@@ -2,7 +2,7 @@
   "object": {
     "test": "test"
   },
-  "methods": [
+  "http_methods": [
     {
       "type": "GET"
     }

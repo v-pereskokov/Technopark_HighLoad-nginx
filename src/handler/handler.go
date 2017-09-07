@@ -13,6 +13,8 @@ type Handler struct {
 	Dir        string
 }
 
+type HandlerFunc func(chan net.Conn)
+
 func CreateHandler(dir string) (handlerFunc HandlerFunc) {
 	handler := Handler{}
 	handler.create(dir)
