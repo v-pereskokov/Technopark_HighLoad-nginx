@@ -25,7 +25,7 @@ func (server *Server) CreateServer(config modelConfig.Server) {
 	server.setSetup(true)
 }
 
-func (server *Server) Start(handler handler.HandlerFunc) {
+func (server *Server) Start(handle handler.HandlerFunc) {
 	if server.IsSetup {
 		listener, err := net.Listen(server.Network, ":"+server.Port)
 		if err != nil {
@@ -38,9 +38,10 @@ func (server *Server) Start(handler handler.HandlerFunc) {
 
 		ch := make(chan net.Conn)
 
+		hand := handler.Handler{}
 		for i := 0; i < 4; i++ {
 			println("Created worker...")
-			handler(ch)
+			hand.Start(ch)
 		}
 
 		for {

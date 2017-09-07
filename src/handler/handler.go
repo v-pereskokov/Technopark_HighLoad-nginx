@@ -14,9 +14,7 @@ type Handler struct {
 }
 
 func (handler *Handler) Start(channel chan net.Conn) {
-	for {
-		handler.handle(<-channel)
-	}
+	handler.handle(channel)
 }
 
 func CreateHandler(dir string) (handlerFunc HandlerFunc) {
@@ -30,12 +28,13 @@ func CreateHandler(dir string) (handlerFunc HandlerFunc) {
 	handler.Dir = dir
 
 	return func(channel chan net.Conn) {
-		handler.handle(<-channel)
+		handler.handle(channel)
 	}
 }
 
-func (handler *Handler) handle(conn net.Conn) {
+func (handler *Handler) handle(channel chan net.Conn) {
 	for {
+		conn := <-channel
 		buf := make([]byte, 1024)
 
 		_, err := conn.Read(buf)
