@@ -28,7 +28,7 @@ func CreateHandler(dir string) (handlerFunc HandlerFunc) {
 	handler.Dir = dir
 
 	return func(channel chan net.Conn) {
-		handler.handle(channel)
+		go handler.handle(channel)
 	}
 }
 

@@ -38,10 +38,9 @@ func (server *Server) Start(handle handler.HandlerFunc) {
 
 		ch := make(chan net.Conn)
 
-		hand := handler.Handler{}
 		for i := 0; i < 4; i++ {
 			println("Created worker...")
-			hand.Start(ch)
+			handle(ch)
 		}
 
 		for {
