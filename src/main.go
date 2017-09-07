@@ -18,8 +18,6 @@ func main() {
 		log.Panicf("can not init config: %v", err)
 	}
 
-	httpServer := server.Server{}
-
-	httpServer.CreateServer(*config.GetServer())
+	httpServer := server.CreateServer(*config.GetServer())
 	httpServer.Start(handler.CreateHandler(config.Dir.Path))
 }

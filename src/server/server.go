@@ -17,12 +17,14 @@ type Server struct {
 	IsSetup  bool
 }
 
-func (server *Server) CreateServer(config modelConfig.Server) {
+func CreateServer(config modelConfig.Server) (server Server) {
 	server.setNetwork(config.Network)
 	server.setProtocol(config.Protocol)
 	server.setHost(config.Host)
 	server.setPort(strconv.Itoa(config.Port))
 	server.setSetup(true)
+
+	return
 }
 
 func (server *Server) Start(handle handler.HandlerFunc) {
