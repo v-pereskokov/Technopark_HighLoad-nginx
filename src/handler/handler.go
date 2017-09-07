@@ -14,7 +14,7 @@ type Handler struct {
 }
 
 func (handler *Handler) Start(channel chan net.Conn) {
-	handler.handle(channel)
+	go handler.handle(channel)
 }
 
 func CreateHandler(dir string) (handlerFunc HandlerFunc) {
