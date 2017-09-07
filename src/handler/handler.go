@@ -38,11 +38,28 @@ func (handler *Handler) create(config *modelServer.Constants, dir string) {
 
 func (handler *Handler) start(channel chan net.Conn) {
 	for {
-		handler.handle(<-channel)
+		handler.Connection = <-channel
+		handler.handle()
 	}
 }
 
-func (handler *Handler) handle(connection net.Conn) {
+func (handler *Handler) handle() {
+	buf := make([]byte, 1024)
+
+	_, err := handler.Connection.Read(buf)
+	if err != nil {
+		fmt.Println("Error reading:", err.Error())
+
+		handler.Connection.Close()
+		return
+	}
+
+	handler.Connection.Write([]byte(handler.Request.GetPath()))
+	handler.Connection.Write([]byte("\r\n\r\n"))
+	handler.Connection.Close()
+}
+
+func (handler *Handler) readRequest(connection net.Conn) {
 	buf := make([]byte, 1024)
 
 	_, err := connection.Read(buf)
@@ -53,7 +70,7 @@ func (handler *Handler) handle(connection net.Conn) {
 		return
 	}
 
-	connection.Write([]byte((*handler.Constants.Methods)[0].Type))
+	connection.Write([]byte(handler.Request.GetPath()))
 	connection.Write([]byte("\r\n\r\n"))
 	connection.Close()
 }
