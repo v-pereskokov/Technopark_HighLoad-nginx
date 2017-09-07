@@ -45,9 +45,13 @@ func (handler *Handler) handle(connection net.Conn) {
 		_, err := connection.Read(buf)
 		if err != nil {
 			fmt.Println("Error reading:", err.Error())
+
+			connection.Close()
+			return
 		}
 
-		connection.Write([]byte("Message received."))
+		connection.Write([]byte(buf))
+		connection.Write([]byte("\r\n\r\n"))
 		connection.Close()
 	}
 }
