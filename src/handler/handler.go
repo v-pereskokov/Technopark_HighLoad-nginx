@@ -1,9 +1,11 @@
 package handler
 
 import (
+	"bytes"
 	"fmt"
 	modelServer "github.com/vladpereskokov/Technopark_HighLoad-nginx/src/models/server"
 	"net"
+	"strings"
 )
 
 type Handler struct {
@@ -44,9 +46,13 @@ func (handler *Handler) start(channel chan net.Conn) {
 }
 
 func (handler *Handler) handle() {
-	buf := make([]byte, 1024)
+	handler.readRequest()
+}
 
-	_, err := handler.Connection.Read(buf)
+func (handler *Handler) readRequest() {
+	buffer := make([]byte, 1024)
+
+	_, err := handler.Connection.Read(buffer)
 	if err != nil {
 		fmt.Println("Error reading:", err.Error())
 
@@ -54,23 +60,11 @@ func (handler *Handler) handle() {
 		return
 	}
 
-	handler.Connection.Write([]byte(handler.Request.GetPath()))
+	raw_request := string(buffer[:bytes.Index(buffer, []byte{0})])
+	start_string := strings.Split(raw_request, "\r\n")[0]
+	fmt.Println(start_string)
+
+	handler.Connection.Write([]byte(start_string))
 	handler.Connection.Write([]byte("\r\n\r\n"))
 	handler.Connection.Close()
-}
-
-func (handler *Handler) readRequest(connection net.Conn) {
-	buf := make([]byte, 1024)
-
-	_, err := connection.Read(buf)
-	if err != nil {
-		fmt.Println("Error reading:", err.Error())
-
-		connection.Close()
-		return
-	}
-
-	connection.Write([]byte(handler.Request.GetPath()))
-	connection.Write([]byte("\r\n\r\n"))
-	connection.Close()
 }
