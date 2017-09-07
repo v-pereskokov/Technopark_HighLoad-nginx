@@ -39,19 +39,17 @@ func (handler *Handler) start(channel chan net.Conn) {
 }
 
 func (handler *Handler) handle(connection net.Conn) {
-	for {
-		buf := make([]byte, 1024)
+	buf := make([]byte, 1024)
 
-		_, err := connection.Read(buf)
-		if err != nil {
-			fmt.Println("Error reading:", err.Error())
+	_, err := connection.Read(buf)
+	if err != nil {
+		fmt.Println("Error reading:", err.Error())
 
-			connection.Close()
-			return
-		}
-
-		connection.Write([]byte(buf))
-		connection.Write([]byte("\r\n\r\n"))
 		connection.Close()
+		return
 	}
+
+	connection.Write([]byte(buf))
+	connection.Write([]byte("\r\n\r\n"))
+	connection.Close()
 }
