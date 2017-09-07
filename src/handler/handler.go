@@ -10,27 +10,29 @@ type Handler struct {
 	Connection net.Conn
 	Request    *modelServer.Request
 	Response   *modelServer.Response
+	Constants  *modelServer.Constants
 	Dir        string
 }
 
 type HandlerFunc func(chan net.Conn)
 
-func CreateHandler(dir string) (handlerFunc HandlerFunc) {
+func CreateHandler(config *modelServer.Constants, dir string) (handlerFunc HandlerFunc) {
 	handler := Handler{}
-	handler.create(dir)
+	handler.create(config, dir)
 
 	return func(channel chan net.Conn) {
 		go handler.start(channel)
 	}
 }
 
-func (handler *Handler) create(dir string) {
+func (handler *Handler) create(config *modelServer.Constants, dir string) {
 	handler.Request = new(modelServer.Request)
 
 	handler.Response = new(modelServer.Response)
 	handler.Response.Status = new(modelServer.Status)
 	handler.Response.Headers = make(map[string]string)
 
+	handler.Constants = config
 	handler.Dir = dir
 }
 

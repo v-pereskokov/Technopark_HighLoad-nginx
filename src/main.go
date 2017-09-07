@@ -30,5 +30,5 @@ func main() {
 	}
 
 	httpServer := server.CreateServer(*serverConfig.GetServer())
-	httpServer.Start(handler.CreateHandler(serverConfig.Dir.Path))
+	httpServer.Start(handler.CreateHandler(httpConstantsConfig, serverConfig.Dir.Path))
 }
