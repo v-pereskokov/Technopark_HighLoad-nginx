@@ -19,7 +19,8 @@ func (handler *Handler) Start(channel chan net.Conn) {
 	}
 }
 
-func CreateHandler(dir string) (handler Handler) {
+func CreateHandler(dir string) (handlerFunc HandlerFunc) {
+	handler := Handler{}
 	handler.Request = new(modelServer.Request)
 
 	handler.Response = new(modelServer.Response)
@@ -28,7 +29,9 @@ func CreateHandler(dir string) (handler Handler) {
 
 	handler.Dir = dir
 
-	return
+	return func(channel chan net.Conn) {
+		handler.handle(<-channel)
+	}
 }
 
 func (handler *Handler) handle(conn net.Conn) {
