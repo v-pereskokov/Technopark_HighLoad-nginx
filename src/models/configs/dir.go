@@ -2,7 +2,7 @@ package configs
 
 import (
 	"fmt"
-	"github.com/vladpereskokov/Technopark_HighLoad-nginx/src/utils"
+	"os"
 )
 
 type Dir struct {
@@ -11,7 +11,12 @@ type Dir struct {
 
 func (dir *Dir) findDir() {
 	if dir.Path == "pwd" {
-		dir.Path = utils.Pwd()
+		pwd, err := os.Getwd()
+		if err != nil {
+			panic(err)
+		}
+
+		dir.Path = pwd
 	}
 }
 

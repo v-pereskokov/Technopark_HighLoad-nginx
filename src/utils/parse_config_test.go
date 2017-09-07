@@ -1,25 +1,26 @@
-package test
+package utils
 
 import (
 	modelConfig "github.com/vladpereskokov/Technopark_HighLoad-nginx/src/models/configs"
 	modelServer "github.com/vladpereskokov/Technopark_HighLoad-nginx/src/models/server"
-	"github.com/vladpereskokov/Technopark_HighLoad-nginx/src/utils"
 	"strings"
 	"testing"
 )
 
 const (
-	FILE_1 = "../configs/test_configs/config_test_1.json"
-	FILE_2 = "../configs/test_configs/config_test_2.json"
-	FILE_3 = "../configs/test_configs/config_test_3.json"
-	FILE_4 = "../configs/test_configs/config_test_4.json"
-	FILE_5 = "../configs/test_configs/config_test_5.json"
+	FILE_1 = "../../configs/test_configs/config_test_1.json"
+	FILE_2 = "../../configs/test_configs/config_test_2.json"
+	FILE_3 = "../../configs/test_configs/config_test_3.json"
+	FILE_4 = "../../configs/test_configs/config_test_4.json"
+	FILE_5 = "../../configs/test_configs/config_test_5.json"
+	FILE_6 = "bladir/bla.json"
+	FILE_7 = "../../configs/test_configs/config_test_6.json"
 )
 
-func TestFromFileFirst(t *testing.T) {
+func TestFromFileServer(t *testing.T) {
 	config := new(modelConfig.Config)
 
-	err := utils.FromFile(FILE_1, &config)
+	err := FromFile(FILE_1, &config)
 	if err != nil {
 		t.Errorf("%v\n", err.Error())
 	}
@@ -48,10 +49,10 @@ func TestFromFileFirst(t *testing.T) {
 	}
 }
 
-func TestFromFileSecond(t *testing.T) {
+func TestFromFileServerPwd(t *testing.T) {
 	config := new(modelConfig.Config)
 
-	err := utils.FromFile(FILE_2, &config)
+	err := FromFile(FILE_2, &config)
 	if err != nil {
 		t.Errorf("%v\n", err.Error())
 	}
@@ -80,10 +81,10 @@ func TestFromFileSecond(t *testing.T) {
 	}
 }
 
-func TestFromFileThird(t *testing.T) {
+func TestFromFileCodes(t *testing.T) {
 	config := new(modelServer.Statuses)
 
-	err := utils.FromFile(FILE_3, &config)
+	err := FromFile(FILE_3, &config)
 	if err != nil {
 		t.Errorf("%v\n", err.Error())
 	}
@@ -95,10 +96,10 @@ func TestFromFileThird(t *testing.T) {
 	}
 }
 
-func TestFromFileFourth(t *testing.T) {
+func TestFromFileMethod(t *testing.T) {
 	config := new(modelServer.Methods)
 
-	err := utils.FromFile(FILE_4, &config)
+	err := FromFile(FILE_4, &config)
 	if err != nil {
 		t.Errorf("%v\n", err.Error())
 	}
@@ -110,10 +111,10 @@ func TestFromFileFourth(t *testing.T) {
 	}
 }
 
-func TestFromFileFifth(t *testing.T) {
+func TestFromFileContentType(t *testing.T) {
 	config := new(modelServer.ContentTypes)
 
-	err := utils.FromFile(FILE_5, &config)
+	err := FromFile(FILE_5, &config)
 	if err != nil {
 		t.Errorf("%v\n", err.Error())
 	}
@@ -122,5 +123,23 @@ func TestFromFileFifth(t *testing.T) {
 		if value.Expansion != ".css" || value.Type != "text/css" {
 			t.Error("Don't work")
 		}
+	}
+}
+
+func TestFromFileFail(t *testing.T) {
+	config := new(modelServer.ContentTypes)
+
+	err := FromFile(FILE_6, &config)
+	if err == nil {
+		t.Error("Dir exist!")
+	}
+}
+
+func TestFromFileErrorFile(t *testing.T) {
+	config := new(modelServer.ContentTypes)
+
+	err := FromFile(FILE_7, &config)
+	if err == nil {
+		t.Error("Json cool")
 	}
 }
