@@ -3,7 +3,7 @@
 all: test
 
 test:
-	go test ./src/configs
+	go test ./test
 
 run:
 	go run ./src/main.go
