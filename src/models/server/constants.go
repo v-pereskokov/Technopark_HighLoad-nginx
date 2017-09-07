@@ -2,7 +2,7 @@ package server
 
 type Constants struct {
 	Statuses     *Statuses     `json:"status"`
-	Methods      *Methods      `json:"methods"`
+	Methods      *Methods      `json:"http_methods"`
 	ContentTypes *ContentTypes `json:"content_type"`
 }
 

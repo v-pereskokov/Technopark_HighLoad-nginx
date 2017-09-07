@@ -30,7 +30,7 @@ func main() {
 		log.Panicf("can not init http config: %v", err)
 	}
 
-	fmt.Println(httpConstantsConfig.GetContentTypes())
+	fmt.Println(httpConstantsConfig)
 
 	httpServer := server.CreateServer(*serverConfig.GetServer())
 	httpServer.Start(handler.CreateHandler(serverConfig.Dir.Path))
