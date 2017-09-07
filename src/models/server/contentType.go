@@ -5,6 +5,4 @@ type ContentType struct {
 	Type      string `json:"type"`
 }
 
-type ContentTypes struct {
-	Content []ContentType `json:"content_types"`
-}
+type ContentTypes []ContentType

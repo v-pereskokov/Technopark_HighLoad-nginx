@@ -82,14 +82,14 @@ func TestFromFileServerPwd(t *testing.T) {
 }
 
 func TestFromFileCodes(t *testing.T) {
-	config := new(modelServer.Statuses)
+	config := new(modelServer.Constants)
 
 	err := FromFile(FILE_3, &config)
 	if err != nil {
 		t.Errorf("%v\n", err.Error())
 	}
 
-	for _, value := range config.Content {
+	for _, value := range *config.Statuses {
 		if value.Code != 200 || value.Message != "Ok" {
 			t.Error("Don't work")
 		}
@@ -97,14 +97,14 @@ func TestFromFileCodes(t *testing.T) {
 }
 
 func TestFromFileMethod(t *testing.T) {
-	config := new(modelServer.Methods)
+	config := new(modelServer.Constants)
 
 	err := FromFile(FILE_4, &config)
 	if err != nil {
 		t.Errorf("%v\n", err.Error())
 	}
 
-	for _, value := range config.Content {
+	for _, value := range *config.Methods {
 		if value.Type != "GET" {
 			t.Error("Don't work")
 		}
@@ -112,14 +112,14 @@ func TestFromFileMethod(t *testing.T) {
 }
 
 func TestFromFileContentType(t *testing.T) {
-	config := new(modelServer.ContentTypes)
+	config := new(modelServer.Constants)
 
 	err := FromFile(FILE_5, &config)
 	if err != nil {
 		t.Errorf("%v\n", err.Error())
 	}
 
-	for _, value := range config.Content {
+	for _, value := range *config.ContentTypes {
 		if value.Expansion != ".css" || value.Type != "text/css" {
 			t.Error("Don't work")
 		}
@@ -127,7 +127,7 @@ func TestFromFileContentType(t *testing.T) {
 }
 
 func TestFromFileFail(t *testing.T) {
-	config := new(modelServer.ContentTypes)
+	config := new(modelServer.Constants)
 
 	err := FromFile(FILE_6, &config)
 	if err == nil {
@@ -136,7 +136,7 @@ func TestFromFileFail(t *testing.T) {
 }
 
 func TestFromFileErrorFile(t *testing.T) {
-	config := new(modelServer.ContentTypes)
+	config := new(modelServer.Constants)
 
 	err := FromFile(FILE_7, &config)
 	if err == nil {

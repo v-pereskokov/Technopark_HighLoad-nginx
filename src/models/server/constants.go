@@ -1,19 +1,19 @@
 package server
 
 type Constants struct {
-	Statuses     []Status
-	Methods      []Method
-	ContentTypes []ContentType
+	Statuses     *Statuses     `json:"status"`
+	Methods      *Methods      `json:"methods"`
+	ContentTypes *ContentTypes `json:"content_type"`
 }
 
-func (constants *Constants) GetContentTypes() []ContentType {
+func (constants *Constants) GetContentTypes() *ContentTypes {
 	return constants.ContentTypes
 }
 
-func (constants *Constants) GetMethods() []Method {
+func (constants *Constants) GetMethods() *Methods {
 	return constants.Methods
 }
 
-func (constants *Constants) GetStatuses() []Status {
+func (constants *Constants) GetStatuses() *Statuses {
 	return constants.Statuses
 }

@@ -12,6 +12,4 @@ func (method *Method) GetMethod() string {
 	return method.Type
 }
 
-type Methods struct {
-	Content []Method `json:"http_methods"`
-}
+type Methods []Method

@@ -5,6 +5,4 @@ type Status struct {
 	Code    int    `json:"code"`
 }
 
-type Statuses struct {
-	Content []Status `json:"status"`
-}
+type Statuses []Status
