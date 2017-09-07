@@ -15,6 +15,14 @@ type Handler struct {
 
 func CreateHandler(dir string) (handlerFunc HandlerFunc) {
 	handler := Handler{}
+	handler.create(dir)
+
+	return func(channel chan net.Conn) {
+		go handler.handle(channel)
+	}
+}
+
+func (handler *Handler) create(dir string) {
 	handler.Request = new(modelServer.Request)
 
 	handler.Response = new(modelServer.Response)
@@ -22,10 +30,6 @@ func CreateHandler(dir string) (handlerFunc HandlerFunc) {
 	handler.Response.Headers = make(map[string]string)
 
 	handler.Dir = dir
-
-	return func(channel chan net.Conn) {
-		go handler.handle(channel)
-	}
 }
 
 func (handler *Handler) handle(channel chan net.Conn) {
