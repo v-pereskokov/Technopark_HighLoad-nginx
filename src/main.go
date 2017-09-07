@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"github.com/vladpereskokov/Technopark_HighLoad-nginx/src/handler"
 	modelConfig "github.com/vladpereskokov/Technopark_HighLoad-nginx/src/models/configs"
 	modelServer "github.com/vladpereskokov/Technopark_HighLoad-nginx/src/models/server"
