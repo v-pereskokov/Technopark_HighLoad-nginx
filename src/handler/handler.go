@@ -18,7 +18,7 @@ func CreateHandler(dir string) (handlerFunc HandlerFunc) {
 	handler.create(dir)
 
 	return func(channel chan net.Conn) {
-		go handler.handle(channel)
+		go handler.start(channel)
 	}
 }
 
@@ -32,17 +32,22 @@ func (handler *Handler) create(dir string) {
 	handler.Dir = dir
 }
 
-func (handler *Handler) handle(channel chan net.Conn) {
+func (handler *Handler) start(channel chan net.Conn) {
 	for {
-		conn := <-channel
+		handler.handle(<-channel)
+	}
+}
+
+func (handler *Handler) handle(connection net.Conn) {
+	for {
 		buf := make([]byte, 1024)
 
-		_, err := conn.Read(buf)
+		_, err := connection.Read(buf)
 		if err != nil {
 			fmt.Println("Error reading:", err.Error())
 		}
 
-		conn.Write([]byte("Message received."))
-		conn.Close()
+		connection.Write([]byte("Message received."))
+		connection.Close()
 	}
 }
