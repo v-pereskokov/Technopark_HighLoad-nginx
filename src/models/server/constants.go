@@ -1,9 +1,9 @@
 package server
 
 type Constants struct {
-	ContentTypes *ContentTypes
-	Methods      *Methods
 	Statuses     *Statuses
+	Methods      *Methods
+	ContentTypes *ContentTypes
 }
 
 func (constants *Constants) GetContentTypes() *ContentTypes {
