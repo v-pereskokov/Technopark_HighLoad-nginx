@@ -53,7 +53,7 @@ func (handler *Handler) handle(connection net.Conn) {
 		return
 	}
 
-	connection.Write([]byte(buf))
+	connection.Write([]byte((*handler.Constants.Methods)[0].Type))
 	connection.Write([]byte("\r\n\r\n"))
 	connection.Close()
 }
