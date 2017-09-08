@@ -15,6 +15,10 @@ func (response *Response) SetStatus(code int, statuses *Statuses) {
 	}
 }
 
+func (response *Response) IsOk() bool {
+	return response.Status.Code == 200
+}
+
 func InitResponse() *Response {
 	response := new(Response)
 
