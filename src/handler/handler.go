@@ -104,35 +104,41 @@ func (handler *Handler) process_request() {
 
 //preproccess path and check file errors
 func (handler *Handler) preprocess_path() {
-	handler.set_path(handler.Factory.root + handler.get_path())
+	handler.Request.SetPath(handler.Dir + handler.Request.GetPath())
 	file_info := handler.check_path(false)
+
 	if file_info != nil && file_info.IsDir() {
-		handler.set_path(handler.get_path() + INDEX_FILE)
+		handler.Request.SetPath(handler.Request.GetPath() + "/index.html")
 		file_info = handler.check_path(true)
 	}
+
 	handler.set_content_headers(file_info)
 }
 
 func (handler *Handler) check_path(is_dir bool) os.FileInfo {
-	request_path := handler.get_path()
+	request_path := handler.Request.GetPath()
 	clear_path := path.Clean(request_path)
-	handler.set_path(clear_path)
+	handler.Request.SetPath(clear_path)
 	info, err := os.Stat(request_path)
 	if err != nil {
 
 		if os.IsNotExist(err) && !is_dir {
 			handler.set_status("not_found")
+			handler.Response.Status.Message = "not_found"
+			handler.Response.Status.Code = 404
 		} else {
-			handler.set_status("forbidden")
+			handler.Response.Status.Message = "forbidden"
+			handler.Response.Status.Code = 403
 		}
-	} else if !strings.Contains(clear_path, handler.Factory.root) {
-		handler.set_status("forbidden")
+	} else if !strings.Contains(clear_path, handler.Dir) {
+		handler.Response.Status.Message = "forbidden"
+		handler.Response.Status.Code = 403
 	}
 	return info
 }
 
 func (handler *Handler) set_content_headers(info os.FileInfo) {
-	if handler.response.is_ok() {
+	if handler.Response.Status.Code == 200 {
 		handler.set_header("Content-Length", strconv.Itoa(int(info.Size())))
 		handler.set_header("Content-Type", handler.get_content_type())
 	} else {
