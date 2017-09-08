@@ -6,7 +6,6 @@ import (
 	"github.com/vladpereskokov/Technopark_HighLoad-nginx/src/utils"
 	"log"
 	"net"
-	"net/url"
 )
 
 const HTTP_CONSTANTS_CONFIG = "configs/http.json"
