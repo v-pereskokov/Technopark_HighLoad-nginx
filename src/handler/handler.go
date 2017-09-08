@@ -2,6 +2,7 @@ package handler
 
 import (
 	"fmt"
+	"github.com/vladpereskokov/Technopark_HighLoad-nginx/src/constants"
 	modelServer "github.com/vladpereskokov/Technopark_HighLoad-nginx/src/models/server"
 	"github.com/vladpereskokov/Technopark_HighLoad-nginx/src/utils"
 	"log"
@@ -57,6 +58,7 @@ func (handler *Handler) start(channel chan net.Conn) {
 
 func (handler *Handler) handle() {
 	handler.readRequest()
+	handler.writeResponse()
 	handler.closeConn()
 }
 
@@ -87,6 +89,14 @@ func (handler *Handler) parseRequest(query string) {
 
 		return
 	}
+}
+
+func (handler *Handler) writeResponse() {
+	handler.write(constants.HTTP_VERSION + " " + handler.Response.Status.Message)
+}
+
+func (handler *Handler) write(content string) {
+	handler.Connection.Write([]byte(content + "\r\n"))
 }
 
 func (handler *Handler) closeConn() {
