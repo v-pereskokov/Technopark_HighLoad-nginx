@@ -3,9 +3,13 @@ package handler
 import (
 	"fmt"
 	modelServer "github.com/vladpereskokov/Technopark_HighLoad-nginx/src/models/server"
+	"github.com/vladpereskokov/Technopark_HighLoad-nginx/src/utils"
+	"log"
 	"net"
 	"net/url"
 )
+
+const HTTP_CONSTANTS_CONFIG = "configs/http.json"
 
 type Handler struct {
 	Connection net.Conn
@@ -17,10 +21,17 @@ type Handler struct {
 
 type HandlerFunc func(chan net.Conn)
 
-func CreateHandler(config *modelServer.Constants, dir string) (handlerFunc HandlerFunc) {
+func CreateHandler(dir string) (handlerFunc HandlerFunc) {
+	httpConstantsConfig := new(modelServer.Constants)
+
+	err := utils.FromFile(HTTP_CONSTANTS_CONFIG, &httpConstantsConfig)
+	if err != nil {
+		log.Panicf("can not init http config: %v", err)
+	}
+
 	return func(channel chan net.Conn) {
 		handler := Handler{}
-		handler.create(config, dir)
+		handler.create(httpConstantsConfig, dir)
 
 		go handler.start(channel)
 	}
