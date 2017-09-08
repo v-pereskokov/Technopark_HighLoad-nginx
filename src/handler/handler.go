@@ -138,26 +138,33 @@ func (handler *Handler) check_path(is_dir bool) os.FileInfo {
 
 func (handler *Handler) set_content_headers(info os.FileInfo) {
 	if handler.Response.Status.Code == 200 {
-		handler.set_header("Content-Length", strconv.Itoa(int(info.Size())))
-		handler.set_header("Content-Type", handler.get_content_type())
+		handler.Response.Headers["Content-Length"] = strconv.Itoa(int(info.Size()))
+		handler.Response.Headers["Content-Type"] = handler.get_content_type()
 	} else {
-		handler.set_header("Content-Length", strconv.Itoa(len(handler.get_error_body())))
-		handler.set_header("Content-Type", ERROR_BODY_MIME_TYPE)
+		handler.Response.Headers["Content-Length"] = strconv.Itoa(len(handler.get_error_body()))
+		handler.Response.Headers["Content-Type"] = "text/html"
 	}
 }
 
+func (handler *Handler) get_error_body() string {
+	body := "<html><body><h1>"
+	body += handler.Response.Status.Message
+	body += "</h1></body></html>"
+	return body
+}
+
 func (handler *Handler) get_content_type() string {
-	extension := ""
-	request_path := handler.get_path()
-	last_dot := strings.LastIndex(request_path, ".")
-	if last_dot >= 0 {
-		extension = request_path[last_dot:]
-	}
-	val, ok := CONTENT_TYPES[extension]
+	//extension := ""
+	//request_path := handler.Request.GetPath()
+	//last_dot := strings.LastIndex(request_path, ".")
+	//if last_dot >= 0 {
+	//	extension = request_path[last_dot:]
+	//}
+	val, ok := "top", 200
 	if ok {
 		return val
 	} else {
-		return DEFAULT_MIME_TYPE
+		return "text/html"
 	}
 }
 
