@@ -123,7 +123,6 @@ func (handler *Handler) check_path(is_dir bool) os.FileInfo {
 	if err != nil {
 
 		if os.IsNotExist(err) && !is_dir {
-			handler.set_status("not_found")
 			handler.Response.Status.Message = "not_found"
 			handler.Response.Status.Code = 404
 		} else {
