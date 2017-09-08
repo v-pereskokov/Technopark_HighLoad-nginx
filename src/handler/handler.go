@@ -43,8 +43,7 @@ func (handler *Handler) create(config *modelServer.Constants, dir string) {
 	handler.Request = modelServer.InitRequest()
 	handler.Response = modelServer.InitResponse()
 
-	handler.Response.Status.Message = "ok"
-	handler.Response.Status.Code = 200
+	handler.Response.SetStatus(200, config.Statuses)
 
 	handler.Constants = config
 	handler.Dir = dir
@@ -94,9 +93,10 @@ func (handler *Handler) parseRequest(query string) {
 
 func (handler *Handler) writeResponse() {
 	handler.write(constants.HTTP_VERSION + " " + handler.Response.Status.Message)
+	handler.writeHeader()
 }
 
-func (handler *Handler) writeHeader(content string) {
+func (handler *Handler) writeHeader() {
 	handler.writeCommonHeaders()
 }
 
