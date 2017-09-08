@@ -36,6 +36,8 @@ func CreateHandler(config *modelServer.Constants, dir string) (handlerFunc Handl
 
 func (handler *Handler) create(config *modelServer.Constants, dir string) {
 	handler.Request = new(modelServer.Request)
+	handler.Request.Method = new(modelServer.Method)
+	handler.Request.Url = new(url.URL)
 
 	handler.Response = new(modelServer.Response)
 	handler.Response.Status = new(modelServer.Status)
