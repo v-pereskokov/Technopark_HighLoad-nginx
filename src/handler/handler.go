@@ -175,17 +175,21 @@ func (handler *Handler) get_content_type() string {
 }
 
 func (handler Handler) writeResponse() {
-	handler.write(constants.HTTP_VERSION + " " + handler.Response.Status.Message)
+	handler.write(constants.HTTP_VERSION + " " +
+		strconv.Itoa(handler.Response.Status.Code) + " " + handler.Response.Status.Message)
 	handler.writeHeader()
+
+	handler.write("")
+	if handler.Request.Method.Type != "HEAD" {
+		handler.writeBody()
+	}
+
+	handler.write("\r\n")
 }
 
 func (handler Handler) writeHeader() {
 	handler.writeCommonHeaders()
 	handler.writeSpecificHeaders()
-	handler.write("")
-	if handler.Request.Method.Type != "HEAD" {
-		handler.writeBody()
-	}
 }
 
 func (handler Handler) writeCommonHeaders() {
