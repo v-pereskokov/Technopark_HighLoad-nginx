@@ -18,3 +18,11 @@ func (request *Request) GetPath() string {
 func (request *Request) SetPath(path string) {
 	request.Url.Path = path
 }
+
+func InitRequest() *Request {
+	request := new(Request)
+	request.Method = new(Method)
+	request.Url = new(url.URL)
+
+	return request
+}
