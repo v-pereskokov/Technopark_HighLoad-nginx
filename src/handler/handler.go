@@ -99,6 +99,7 @@ func (handler Handler) writeResponse() {
 func (handler Handler) writeHeader() {
 	handler.writeCommonHeaders()
 	handler.writeSpecificHeaders()
+	handler.write("")
 }
 
 func (handler Handler) writeCommonHeaders() {
