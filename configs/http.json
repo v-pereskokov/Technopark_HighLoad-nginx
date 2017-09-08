@@ -33,6 +33,42 @@
     {
       "expansion": ".css",
       "type": "text/css"
-    }
+    },
+    {
+      "expansion": ".gif",
+      "type": "image/gif"
+    },
+    {
+      "expansion": ".html",
+      "type": "text/html"
+    },
+    {
+      "expansion": ".jpeg",
+      "type": "image/jpeg"
+    },
+    {
+      "expansion": ".jpg",
+      "type": "image/jpeg"
+    },
+    {
+      "expansion": ".png",
+      "type": "image/png"
+    },
+    {
+      "expansion": ".js",
+      "type": "text/javascript"
+    },
+    {
+      "expansion": ".json",
+      "type": "application/json"
+    },
+    {
+      "expansion": ".txt",
+      "type": "application/text"
+    },
+    {
+      "expansion": ".swf",
+      "type": "application/x-shockwave-flash"
+    },
   ]
 }
