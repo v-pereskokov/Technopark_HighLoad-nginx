@@ -17,12 +17,11 @@ type Handler struct {
 
 type HandlerFunc func(chan net.Conn)
 
-// ?
 func CreateHandler(config *modelServer.Constants, dir string) (handlerFunc HandlerFunc) {
-	handler := Handler{}
-	handler.create(config, dir)
-
 	return func(channel chan net.Conn) {
+		handler := Handler{}
+		handler.create(config, dir)
+
 		go handler.start(channel)
 	}
 }
