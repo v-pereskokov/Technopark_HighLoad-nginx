@@ -26,6 +26,9 @@ func (response *Response) IsOk() bool {
 }
 
 func (response Response) GetOkBody(path string) (*bufio.Reader, error) {
+	fmt.Println("path: ")
+	fmt.Println(path)
+	fmt.Println("")
 	file, err := os.Open(path)
 	if err != nil {
 		return nil, err

@@ -7,6 +7,7 @@ import (
 	"github.com/vladpereskokov/Technopark_HighLoad-nginx/src/utils"
 	"log"
 	"net"
+	"net/url"
 	"strings"
 	"time"
 )
@@ -79,16 +80,20 @@ func (handler *Handler) parseRequest(query string) {
 	splitedQuery := strings.Split(query, "\r\n")[0]
 	queryParts := strings.Split(splitedQuery, " ")
 
-	for _, value := range queryParts {
-		handler.Connection.Write([]byte(value))
-		handler.Connection.Write([]byte("\r\n"))
-	}
-
 	if len(queryParts) != 3 {
 		handler.Response.SetStatus(400, handler.Constants.Statuses)
 
 		return
 	}
+
+	handler.Request.Method.SetMethod(queryParts[0])
+	parsed_url, err := url.Parse(queryParts[1])
+
+	if err != nil || !strings.HasPrefix(queryParts[2], "HTTP/") {
+		handler.Response.SetStatus(400, handler.Constants.Statuses)
+	}
+
+	handler.Request.Url = parsed_url
 }
 
 func (handler Handler) writeResponse() {
@@ -129,6 +134,7 @@ func (handler Handler) writeOkBody() {
 	reader, err := handler.Response.GetOkBody(handler.Request.GetPath())
 	if err != nil {
 		fmt.Println("Can't open file ", handler.Request.GetPath())
+		return
 	}
 
 	_, err = reader.WriteTo(handler.Connection)
