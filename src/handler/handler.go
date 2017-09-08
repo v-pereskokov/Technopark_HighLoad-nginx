@@ -128,8 +128,6 @@ func (handler *Handler) preProcessPath() {
 func (handler *Handler) check_path(is_dir bool) os.FileInfo {
 	request_path := handler.Request.GetPath()
 
-	fmt.Println(request_path)
-
 	clear_path := path.Clean(request_path)
 	handler.Request.SetPath(clear_path)
 
