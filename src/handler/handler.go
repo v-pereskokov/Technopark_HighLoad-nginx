@@ -9,6 +9,7 @@ import (
 	"net"
 	"net/url"
 	"os"
+	"path"
 	"strconv"
 	"strings"
 	"time"
@@ -62,6 +63,7 @@ func (handler *Handler) start(channel chan net.Conn) {
 func (handler *Handler) handle() {
 	handler.readRequest()
 	handler.writeResponse()
+	handler.requestHandle()
 	handler.closeConn()
 }
 
@@ -107,8 +109,37 @@ func (handler *Handler) requestHandle() {
 	if !handler.Constants.Methods.Contains(handler.Request.Method.Type) {
 		handler.Response.SetStatus(405, handler.Constants.Statuses)
 	} else {
-		handler.preprocess_path()
+		handler.preProcessPath()
 	}
+}
+
+func (handler *Handler) preProcessPath() {
+	handler.Request.SetPath(handler.Dir + handler.Request.GetPath())
+	file_info := handler.check_path(false)
+	if file_info != nil && file_info.IsDir() {
+		handler.Request.SetPath(handler.Request.GetPath() + constants.INDEX_FILE)
+		file_info = handler.check_path(true)
+	}
+	handler.setContentHeaders(file_info)
+}
+
+func (handler *Handler) check_path(is_dir bool) os.FileInfo {
+	request_path := handler.Request.GetPath()
+
+	clear_path := path.Clean(request_path)
+	handler.Request.SetPath(clear_path)
+
+	info, err := os.Stat(request_path)
+	if err != nil {
+		if os.IsNotExist(err) && !is_dir {
+			handler.Response.SetStatus(404, handler.Constants.Statuses)
+		} else {
+			handler.Response.SetStatus(403, handler.Constants.Statuses)
+		}
+	} else if !strings.Contains(clear_path, handler.Dir) {
+		handler.Response.SetStatus(403, handler.Constants.Statuses)
+	}
+	return info
 }
 
 func (handler *Handler) setContentHeaders(info os.FileInfo) {
@@ -116,7 +147,8 @@ func (handler *Handler) setContentHeaders(info os.FileInfo) {
 		handler.Response.SetHeader("Content-Length", strconv.Itoa(int(info.Size())))
 		handler.Response.SetHeader("Content-Type", handler.get_content_type())
 	} else {
-		handler.Response.SetHeader("Content-Length", strconv.Itoa(len(handler.get_error_body())))
+		handler.Response.SetHeader("Content-Length",
+			strconv.Itoa(len(handler.Response.GetErrorBody(handler.Response.Status.Message))))
 		handler.Response.SetHeader("Content-Type", constants.ERROR_BODY_MIME_TYPE)
 	}
 }
