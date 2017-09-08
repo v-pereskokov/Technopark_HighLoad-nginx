@@ -1,15 +1,15 @@
 package server
 
 type ContentType struct {
-	Expansion string `json:"expansion"`
+	Extension string `json:"extension"`
 	Type      string `json:"type"`
 }
 
 type ContentTypes []ContentType
 
-func (types *ContentTypes) GetType(expansion string) (cType string) {
+func (types *ContentTypes) GetType(extension string) (cType string) {
 	for _, value := range *types {
-		if value.Expansion == expansion {
+		if value.Extension == extension {
 			return value.Type
 		}
 	}

@@ -31,43 +31,43 @@
   ],
   "content_type": [
     {
-      "expansion": ".css",
+      "extension": ".css",
       "type": "text/css"
     },
     {
-      "expansion": ".gif",
+      "extension": ".gif",
       "type": "image/gif"
     },
     {
-      "expansion": ".html",
+      "extension": ".html",
       "type": "text/html"
     },
     {
-      "expansion": ".jpeg",
+      "extension": ".jpeg",
       "type": "image/jpeg"
     },
     {
-      "expansion": ".jpg",
+      "extension": ".jpg",
       "type": "image/jpeg"
     },
     {
-      "expansion": ".png",
+      "extension": ".png",
       "type": "image/png"
     },
     {
-      "expansion": ".js",
+      "extension": ".js",
       "type": "text/javascript"
     },
     {
-      "expansion": ".json",
+      "extension": ".json",
       "type": "application/json"
     },
     {
-      "expansion": ".txt",
+      "extension": ".txt",
       "type": "application/text"
     },
     {
-      "expansion": ".swf",
+      "extension": ".swf",
       "type": "application/x-shockwave-flash"
     }
   ]

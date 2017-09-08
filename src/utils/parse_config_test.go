@@ -120,7 +120,7 @@ func TestFromFileContentType(t *testing.T) {
 	}
 
 	for _, value := range *config.ContentTypes {
-		if value.Expansion != ".css" || value.Type != "text/css" {
+		if value.Extension != ".css" || value.Type != "text/css" {
 			t.Error("Don't work")
 		}
 	}

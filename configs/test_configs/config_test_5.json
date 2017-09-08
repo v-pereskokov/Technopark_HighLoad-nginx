@@ -4,7 +4,7 @@
   },
   "content_type": [
     {
-      "expansion": ".css",
+      "extension": ".css",
       "type": "text/css"
     }
   ]

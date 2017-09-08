@@ -8,6 +8,8 @@ import (
 	"log"
 	"net"
 	"net/url"
+	"os"
+	"strconv"
 	"strings"
 	"time"
 )
@@ -94,6 +96,48 @@ func (handler *Handler) parseRequest(query string) {
 	}
 
 	handler.Request.Url = parsed_url
+}
+
+func (handler *Handler) requestHandle() {
+	if !handler.Response.IsOk() {
+		handler.setContentHeaders(nil)
+		return
+	}
+
+	if !handler.Constants.Methods.Contains(handler.Request.Method.Type) {
+		handler.Response.SetStatus(405, handler.Constants.Statuses)
+	} else {
+		handler.preprocess_path()
+	}
+}
+
+func (handler *Handler) setContentHeaders(info os.FileInfo) {
+	if handler.Response.IsOk() {
+		handler.Response.SetHeader("Content-Length", strconv.Itoa(int(info.Size())))
+		handler.Response.SetHeader("Content-Type", handler.get_content_type())
+	} else {
+		handler.Response.SetHeader("Content-Length", strconv.Itoa(len(handler.get_error_body())))
+		handler.Response.SetHeader("Content-Type", constants.ERROR_BODY_MIME_TYPE)
+	}
+}
+
+func (handler *Handler) get_content_type() string {
+	extension := ""
+
+	requestPath := handler.Request.GetPath()
+	lastDot := strings.LastIndex(requestPath, ".")
+
+	if lastDot >= 0 {
+		extension = requestPath[lastDot:]
+	}
+
+	cType := handler.Constants.ContentTypes.GetType(extension)
+
+	if len(cType) != 0 {
+		return cType
+	} else {
+		return constants.DEFAULT_MIME_TYPE
+	}
 }
 
 func (handler Handler) writeResponse() {

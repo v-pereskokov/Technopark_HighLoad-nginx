@@ -21,6 +21,10 @@ func (response *Response) SetStatus(code int, statuses *Statuses) {
 	}
 }
 
+func (response *Response) SetHeader(cType string, value string) {
+	response.Headers[cType] = value
+}
+
 func (response *Response) IsOk() bool {
 	return response.Status.Code == 200
 }
