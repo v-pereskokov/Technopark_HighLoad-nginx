@@ -146,15 +146,6 @@ func (handler *Handler) set_content_headers(info os.FileInfo) {
 	}
 }
 
-func contains(arr []interface{}, value string) bool {
-	for _, elem := range arr {
-		if elem == value {
-			return true
-		}
-	}
-	return false
-}
-
 func (handler *Handler) get_content_type() string {
 	extension := ""
 	request_path := handler.get_path()
