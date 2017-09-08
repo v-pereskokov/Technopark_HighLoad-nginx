@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"bufio"
 	"bytes"
 	"fmt"
 	modelServer "github.com/vladpereskokov/Technopark_HighLoad-nginx/src/models/server"
@@ -10,6 +11,7 @@ import (
 	"path"
 	"strconv"
 	"strings"
+	"time"
 )
 
 type Handler struct {
@@ -52,6 +54,8 @@ func (handler *Handler) start(channel chan net.Conn) {
 
 func (handler *Handler) handle() {
 	handler.readRequest()
+	handler.process_request()
+	handler.write_response()
 	handler.closeConn()
 }
 
@@ -168,6 +172,64 @@ func (handler *Handler) get_content_type() string {
 		return val
 	} else {
 		return "text/html"
+	}
+}
+
+func (handler Handler) write_response() {
+	handler.write_string("HTTP/1.1" + " " + handler.Response.Status.Message)
+	handler.write_headers()
+	handler.write_string("") // empty string after headers
+	if handler.Request.Method.Type != "HEAD" {
+		handler.write_body()
+	}
+	fmt.Println(handler.Request.Method.Type, " ", handler.Request.GetPath(), " ", handler.Response.Status.Code)
+}
+
+func (handler *Handler) write_string(str string) {
+	handler.Connection.Write([]byte(str + "\r\n"))
+}
+
+func (handler *Handler) write_body() {
+	if handler.Response.Status.Code == 200 {
+		handler.write_ok_body()
+	} else {
+		handler.write_error_body()
+	}
+}
+
+func (handler *Handler) write_ok_body() {
+	file, err := os.Open(handler.Request.GetPath())
+	if err != nil {
+		fmt.Println("Can't open file ", handler.Request.GetPath())
+		return
+	}
+	defer file.Close()
+	reader := bufio.NewReader(file)
+	_, read_err := reader.WriteTo(handler.Connection)
+	if read_err != nil {
+		fmt.Println("Some error on read or write file ", handler.Request.GetPath())
+	}
+}
+
+func (handler *Handler) write_error_body() {
+	body := []byte(handler.get_error_body())
+	handler.Connection.Write(body)
+}
+
+func (handler Handler) write_headers() {
+	handler.write_common_headers()
+	handler.write_specific_headers()
+}
+
+func (handler Handler) write_common_headers() {
+	handler.write_string("Date: " + time.Now().String())
+	handler.write_string("Server: " + "Vladdos")
+	handler.write_string("Connection: close")
+}
+
+func (handler Handler) write_specific_headers() {
+	for key, value := range handler.Response.Headers {
+		handler.write_string(key + ": " + value)
 	}
 }
 
