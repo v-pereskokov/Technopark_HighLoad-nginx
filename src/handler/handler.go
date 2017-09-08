@@ -91,22 +91,29 @@ func (handler *Handler) parseRequest(query string) {
 	}
 }
 
-func (handler *Handler) writeResponse() {
+func (handler Handler) writeResponse() {
 	handler.write(constants.HTTP_VERSION + " " + handler.Response.Status.Message)
 	handler.writeHeader()
 }
 
-func (handler *Handler) writeHeader() {
+func (handler Handler) writeHeader() {
 	handler.writeCommonHeaders()
+	handler.writeSpecificHeaders()
 }
 
-func (handler *Handler) writeCommonHeaders() {
+func (handler Handler) writeCommonHeaders() {
 	handler.write("Date: " + time.Now().String())
 	handler.write("Server: " + constants.SERVER)
 	handler.write("Connection: close")
 }
 
-func (handler *Handler) write(content string) {
+func (handler Handler) writeSpecificHeaders() {
+	for key, value := range handler.Response.Headers {
+		handler.write(key + ": " + value)
+	}
+}
+
+func (handler Handler) write(content string) {
 	handler.Connection.Write([]byte(content + "\r\n"))
 }
 
