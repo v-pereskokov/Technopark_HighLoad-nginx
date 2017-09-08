@@ -62,8 +62,8 @@ func (handler *Handler) start(channel chan net.Conn) {
 
 func (handler *Handler) handle() {
 	handler.readRequest()
-	handler.writeResponse()
 	handler.requestHandle()
+	handler.writeResponse()
 	handler.closeConn()
 }
 
@@ -116,15 +116,19 @@ func (handler *Handler) requestHandle() {
 func (handler *Handler) preProcessPath() {
 	handler.Request.SetPath(handler.Dir + handler.Request.GetPath())
 	file_info := handler.check_path(false)
+
 	if file_info != nil && file_info.IsDir() {
 		handler.Request.SetPath(handler.Request.GetPath() + constants.INDEX_FILE)
 		file_info = handler.check_path(true)
 	}
+
 	handler.setContentHeaders(file_info)
 }
 
 func (handler *Handler) check_path(is_dir bool) os.FileInfo {
 	request_path := handler.Request.GetPath()
+
+	fmt.Println(request_path)
 
 	clear_path := path.Clean(request_path)
 	handler.Request.SetPath(clear_path)
