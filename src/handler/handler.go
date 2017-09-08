@@ -6,6 +6,7 @@ import (
 	"github.com/vladpereskokov/Technopark_HighLoad-nginx/src/utils"
 	"log"
 	"net"
+	"strings"
 )
 
 const HTTP_CONSTANTS_CONFIG = "configs/http.json"
@@ -69,8 +70,19 @@ func (handler *Handler) readRequest() {
 		return
 	}
 
-	handler.Connection.Write(buffer)
-	handler.Connection.Write([]byte("\r\n\r\n"))
+	handler.parseRequest(string(buffer))
+	//handler.Connection.Write(buffer)
+	//handler.Connection.Write([]byte("\r\n\r\n"))
+}
+
+func (handler *Handler) parseRequest(query string) {
+	splitedQuery := strings.Split(query, "\r\n")[0]
+	queryParts := strings.Split(splitedQuery, " ")
+
+	for _, value := range queryParts {
+		handler.Connection.Write([]byte(value))
+		handler.Connection.Write([]byte("\r\n"))
+	}
 }
 
 func (handler *Handler) closeConn() {
