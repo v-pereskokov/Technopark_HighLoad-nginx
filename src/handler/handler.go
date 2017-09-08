@@ -1,7 +1,6 @@
 package handler
 
 import (
-	"bytes"
 	"fmt"
 	modelServer "github.com/vladpereskokov/Technopark_HighLoad-nginx/src/models/server"
 	"net"
@@ -47,6 +46,7 @@ func (handler *Handler) start(channel chan net.Conn) {
 
 func (handler *Handler) handle() {
 	handler.readRequest()
+	handler.close()
 }
 
 func (handler *Handler) readRequest() {
@@ -56,15 +56,28 @@ func (handler *Handler) readRequest() {
 	if err != nil {
 		fmt.Println("Error reading:", err.Error())
 
-		handler.Connection.Close()
 		return
 	}
 
-	raw_request := string(buffer[:bytes.Index(buffer, []byte{0})])
-	start_string := strings.Split(raw_request, "\r\n")[0]
-	fmt.Println(start_string)
+	fmt.Printf("%s", buffer)
 
-	handler.Connection.Write([]byte(start_string))
+	handler.Connection.Write(buffer)
 	handler.Connection.Write([]byte("\r\n\r\n"))
+}
+
+func (handler *Handler) parse_start_string(start_string string) {
+	splited_string := strings.Split(start_string, " ")
+	if len(splited_string) != 3 {
+		handler.Response.Status.Message = "bad_request"
+		handler.Response.Status.Code = 400
+		return
+	}
+
+	fmt.Println("top: ")
+	fmt.Printf("%v", splited_string[0])
+	fmt.Println("top2:")
+}
+
+func (handler *Handler) close() {
 	handler.Connection.Close()
 }
