@@ -7,6 +7,14 @@ type Response struct {
 	Headers Headers
 }
 
+func (response *Response) SetStatus(code int, statuses *Statuses) {
+	for _, value := range *statuses {
+		if value.Code == code {
+			response.Status.SetStatus(value.Message, value.Code)
+		}
+	}
+}
+
 func InitResponse() *Response {
 	response := new(Response)
 

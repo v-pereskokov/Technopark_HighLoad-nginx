@@ -71,8 +71,6 @@ func (handler *Handler) readRequest() {
 	}
 
 	handler.parseRequest(string(buffer))
-	//handler.Connection.Write(buffer)
-	//handler.Connection.Write([]byte("\r\n\r\n"))
 }
 
 func (handler *Handler) parseRequest(query string) {
@@ -82,6 +80,12 @@ func (handler *Handler) parseRequest(query string) {
 	for _, value := range queryParts {
 		handler.Connection.Write([]byte(value))
 		handler.Connection.Write([]byte("\r\n"))
+	}
+
+	if len(queryParts) != 3 {
+		handler.Response.SetStatus(400, handler.Constants.Statuses)
+
+		return
 	}
 }
 
