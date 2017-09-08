@@ -39,10 +39,7 @@ func CreateHandler(dir string) (handlerFunc HandlerFunc) {
 
 func (handler *Handler) create(config *modelServer.Constants, dir string) {
 	handler.Request = modelServer.InitRequest()
-
-	handler.Response = new(modelServer.Response)
-	handler.Response.Status = new(modelServer.Status)
-	handler.Response.Headers = make(map[string]string)
+	handler.Response = modelServer.InitResponse()
 
 	handler.Response.Status.Message = "ok"
 	handler.Response.Status.Code = 200
