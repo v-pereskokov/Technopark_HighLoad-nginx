@@ -52,7 +52,7 @@ func (handler *Handler) start(channel chan net.Conn) {
 
 func (handler *Handler) handle() {
 	handler.readRequest()
-	handler.close()
+	handler.closeConn()
 }
 
 func (handler *Handler) readRequest() {
@@ -154,20 +154,23 @@ func (handler *Handler) get_error_body() string {
 }
 
 func (handler *Handler) get_content_type() string {
-	//extension := ""
-	//request_path := handler.Request.GetPath()
-	//last_dot := strings.LastIndex(request_path, ".")
-	//if last_dot >= 0 {
-	//	extension = request_path[last_dot:]
-	//}
-	val, ok := "top", 200
-	if ok {
+	extension := ""
+
+	request_path := handler.Request.GetPath()
+	last_dot := strings.LastIndex(request_path, ".")
+
+	if last_dot >= 0 {
+		extension = request_path[last_dot:]
+	}
+
+	val := handler.Constants.ContentTypes.GetType(extension)
+	if len(val) != 0 {
 		return val
 	} else {
 		return "text/html"
 	}
 }
 
-func (handler *Handler) close() {
+func (handler *Handler) closeConn() {
 	handler.Connection.Close()
 }

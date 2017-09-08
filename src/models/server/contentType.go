@@ -6,3 +6,13 @@ type ContentType struct {
 }
 
 type ContentTypes []ContentType
+
+func (types *ContentTypes) GetType(expansion string) (cType string) {
+	for _, value := range *types {
+		if value.Expansion == expansion {
+			return value.Type
+		}
+	}
+
+	return ""
+}
