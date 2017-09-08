@@ -8,6 +8,7 @@ import (
 	"log"
 	"net"
 	"strings"
+	"time"
 )
 
 const HTTP_CONSTANTS_CONFIG = "configs/http.json"
@@ -93,6 +94,16 @@ func (handler *Handler) parseRequest(query string) {
 
 func (handler *Handler) writeResponse() {
 	handler.write(constants.HTTP_VERSION + " " + handler.Response.Status.Message)
+}
+
+func (handler *Handler) writeHeader(content string) {
+	handler.writeCommonHeaders()
+}
+
+func (handler *Handler) writeCommonHeaders() {
+	handler.write("Date: " + time.Now().String())
+	handler.write("Server: " + constants.SERVER)
+	handler.write("Connection: close")
 }
 
 func (handler *Handler) write(content string) {
