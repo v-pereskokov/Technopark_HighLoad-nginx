@@ -170,7 +170,7 @@ func (handler Handler) writeBody() {
 	if handler.Response.IsOk() {
 		handler.writeOkBody()
 	} else {
-		handler.Response.GetErrorBody()
+		handler.writeErrorBody()
 	}
 }
 
@@ -185,6 +185,12 @@ func (handler Handler) writeOkBody() {
 	if err != nil {
 		fmt.Println("Some error on read or write file ", handler.Request.GetPath())
 	}
+}
+
+func (handler Handler) writeErrorBody() {
+	body := handler.Response.GetErrorBody(handler.Response.Status.Message)
+
+	handler.write(body)
 }
 
 func (handler Handler) write(content string) {

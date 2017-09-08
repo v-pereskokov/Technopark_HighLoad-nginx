@@ -42,8 +42,8 @@ func (response Response) GetOkBody(path string) (*bufio.Reader, error) {
 	return bufio.NewReader(file), nil
 }
 
-func (response Response) GetErrorBody() {
-
+func (response Response) GetErrorBody(message string) string {
+	return "<html><body><h1>" + message + "</h1></body></html>"
 }
 
 func InitResponse() *Response {
