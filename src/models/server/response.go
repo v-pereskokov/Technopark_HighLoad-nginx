@@ -1,5 +1,11 @@
 package server
 
+import (
+	"bufio"
+	"fmt"
+	"os"
+)
+
 type Headers map[string]string
 
 type Response struct {
@@ -17,6 +23,20 @@ func (response *Response) SetStatus(code int, statuses *Statuses) {
 
 func (response *Response) IsOk() bool {
 	return response.Status.Code == 200
+}
+
+func (response Response) GetOkBody(path string) (*bufio.Reader, error) {
+	file, err := os.Open(path)
+	if err != nil {
+		return nil, err
+	}
+	defer file.Close()
+
+	return bufio.NewReader(file), nil
+}
+
+func (response Response) GetErrorBody() {
+
 }
 
 func InitResponse() *Response {

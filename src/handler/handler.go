@@ -100,6 +100,9 @@ func (handler Handler) writeHeader() {
 	handler.writeCommonHeaders()
 	handler.writeSpecificHeaders()
 	handler.write("")
+	if handler.Request.Method.Type != "HEAD" {
+		handler.writeBody()
+	}
 }
 
 func (handler Handler) writeCommonHeaders() {
@@ -111,6 +114,26 @@ func (handler Handler) writeCommonHeaders() {
 func (handler Handler) writeSpecificHeaders() {
 	for key, value := range handler.Response.Headers {
 		handler.write(key + ": " + value)
+	}
+}
+
+func (handler Handler) writeBody() {
+	if handler.Response.IsOk() {
+		handler.writeOkBody()
+	} else {
+		handler.Response.GetErrorBody()
+	}
+}
+
+func (handler Handler) writeOkBody() {
+	reader, err := handler.Response.GetOkBody(handler.Request.GetPath())
+	if err != nil {
+		fmt.Println("Can't open file ", handler.Request.GetPath())
+	}
+
+	_, err = reader.WriteTo(handler.Connection)
+	if err != nil {
+		fmt.Println("Some error on read or write file ", handler.Request.GetPath())
 	}
 }
 
