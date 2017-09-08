@@ -209,16 +209,13 @@ func (handler Handler) writeBody() {
 }
 
 func (handler Handler) writeOkBody() {
-	reader, err := handler.Response.GetOkBody(handler.Request.GetPath())
+	file, err := handler.Response.GetOkBody(handler.Request.GetPath())
 	if err != nil {
 		fmt.Println("Can't open file ", handler.Request.GetPath())
 		return
 	}
 
-	_, err = reader.WriteTo(handler.Connection)
-	if err != nil {
-		fmt.Println("Some error on read or write file ", handler.Request.GetPath())
-	}
+	handler.write(string(file))
 }
 
 func (handler Handler) writeErrorBody() {

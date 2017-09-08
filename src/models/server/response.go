@@ -1,9 +1,7 @@
 package server
 
 import (
-	"bufio"
-	"fmt"
-	"os"
+	"io/ioutil"
 )
 
 type Headers map[string]string
@@ -29,14 +27,13 @@ func (response *Response) IsOk() bool {
 	return response.Status.Code == 200
 }
 
-func (response Response) GetOkBody(path string) (*bufio.Reader, error) {
-	file, err := os.Open(path)
+func (response Response) GetOkBody(path string) ([]byte, error) {
+	file, err := ioutil.ReadFile(path)
 	if err != nil {
 		return nil, err
 	}
-	defer file.Close()
 
-	return bufio.NewReader(file), nil
+	return file, nil
 }
 
 func (response Response) GetErrorBody(message string) string {
