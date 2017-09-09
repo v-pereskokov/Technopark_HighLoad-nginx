@@ -149,13 +149,11 @@ func (handler *Handler) setResponse() {
 		}
 	}
 
-	handler.setContentHeaders(info)
-
 	if handler.Request.Method.Type == "HEAD" {
 		handler.Response.SetStatus(200, handler.Constants.Statuses)
-
-		return
 	}
+
+	handler.setContentHeaders(info)
 }
 
 func (handler *Handler) setContentHeaders(info os.FileInfo) {
@@ -195,6 +193,7 @@ func (handler Handler) writeResponse() {
 
 	handler.write("")
 	if handler.Request.Method.Type != "HEAD" {
+		fmt.Println(handler.Request.Method.Type)
 		handler.writeBody()
 	}
 
