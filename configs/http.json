@@ -1,0 +1,74 @@
+{
+  "status": [
+    {
+      "code": 200,
+      "message": "Ok"
+    },
+    {
+      "code": 400,
+      "message": "Bad request"
+    },
+    {
+      "code": 403,
+      "message": "Forbidden"
+    },
+    {
+      "code": 404,
+      "message": "Not found"
+    },
+    {
+      "code": 405,
+      "message": "Method not allowed"
+    }
+  ],
+  "http_methods": [
+    {
+      "type": "GET"
+    },
+    {
+      "type": "HEAD"
+    }
+  ],
+  "content_type": [
+    {
+      "extension": ".css",
+      "type": "text/css"
+    },
+    {
+      "extension": ".gif",
+      "type": "image/gif"
+    },
+    {
+      "extension": ".html",
+      "type": "text/html"
+    },
+    {
+      "extension": ".jpeg",
+      "type": "image/jpeg"
+    },
+    {
+      "extension": ".jpg",
+      "type": "image/jpeg"
+    },
+    {
+      "extension": ".png",
+      "type": "image/png"
+    },
+    {
+      "extension": ".js",
+      "type": "text/javascript"
+    },
+    {
+      "extension": ".json",
+      "type": "application/json"
+    },
+    {
+      "extension": ".txt",
+      "type": "application/text"
+    },
+    {
+      "extension": ".swf",
+      "type": "application/x-shockwave-flash"
+    }
+  ]
+}

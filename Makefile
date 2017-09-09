@@ -1,9 +1,9 @@
-.PHONY: all test
+.PHONY: all test run
 
-all: test bench
+all: test
 
 test:
-	go test ./mux
+	go test ./...
 
-bench:
-	go test ./mux -bench=.
+run:
+	go run ./src/main.go

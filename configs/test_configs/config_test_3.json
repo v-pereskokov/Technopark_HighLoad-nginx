@@ -1,0 +1,11 @@
+{
+  "object": {
+    "test": "test"
+  },
+  "status": [
+    {
+      "code": 200,
+      "message": "Ok"
+    }
+  ]
+}
