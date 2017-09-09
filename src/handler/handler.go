@@ -85,7 +85,6 @@ func (handler *Handler) parseRequest(query string) {
 	queryParts := strings.Split(splitedQuery, " ")
 
 	if len(queryParts) != 3 {
-		fmt.Println("here")
 		handler.Response.SetStatus(400, handler.Constants.Statuses)
 
 		return
@@ -95,7 +94,6 @@ func (handler *Handler) parseRequest(query string) {
 	parsed_url, err := url.Parse(queryParts[1])
 
 	if err != nil || !strings.HasPrefix(queryParts[2], "HTTP/") {
-		fmt.Println("here2")
 		handler.Response.SetStatus(400, handler.Constants.Statuses)
 	}
 
@@ -123,8 +121,6 @@ func (handler *Handler) preProcessPath() {
 
 func (handler *Handler) setResponse() {
 	if strings.Contains(handler.Request.GetPath(), "../") {
-		fmt.Println("here3")
-
 		handler.Response.SetStatus(400, handler.Constants.Statuses)
 
 		return
