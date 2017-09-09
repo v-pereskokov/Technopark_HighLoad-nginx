@@ -33,7 +33,6 @@ func (server *Server) Start(handle handler.HandlerFunc) {
 		if err != nil {
 			panic("Failed start server: " + err.Error())
 		}
-
 		defer listener.Close()
 
 		log.Print("Server started at " + server.Port + " port")

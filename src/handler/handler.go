@@ -35,7 +35,7 @@ func CreateHandler(dir string) (handlerFunc HandlerFunc) {
 	}
 
 	return func(channel chan net.Conn) {
-		handler := Handler{}
+		handler := new(Handler)
 		handler.create(httpConstantsConfig, dir)
 
 		go handler.start(channel)
@@ -63,6 +63,7 @@ func (handler *Handler) handle() {
 	handler.readRequest()
 	handler.writeResponse()
 	handler.closeConn()
+	handler.create(handler.Constants, handler.Dir)
 }
 
 func (handler *Handler) readRequest() {
@@ -84,6 +85,7 @@ func (handler *Handler) parseRequest(query string) {
 	queryParts := strings.Split(splitedQuery, " ")
 
 	if len(queryParts) != 3 {
+		fmt.Println("here")
 		handler.Response.SetStatus(400, handler.Constants.Statuses)
 
 		return
@@ -93,6 +95,7 @@ func (handler *Handler) parseRequest(query string) {
 	parsed_url, err := url.Parse(queryParts[1])
 
 	if err != nil || !strings.HasPrefix(queryParts[2], "HTTP/") {
+		fmt.Println("here2")
 		handler.Response.SetStatus(400, handler.Constants.Statuses)
 	}
 
@@ -120,11 +123,10 @@ func (handler *Handler) preProcessPath() {
 
 func (handler *Handler) setResponse() {
 	if strings.Contains(handler.Request.GetPath(), "../") {
-		handler.Response.SetStatus(403, handler.Constants.Statuses)
+		fmt.Println("here3")
 
-		fmt.Println("path: ")
-		fmt.Println(handler.Request.GetPath())
-		fmt.Println("")
+		handler.Response.SetStatus(400, handler.Constants.Statuses)
+
 		return
 	}
 
@@ -145,9 +147,6 @@ func (handler *Handler) setResponse() {
 
 			return
 		} else {
-			fmt.Println("req: ")
-			fmt.Println(handler.Request)
-			fmt.Println("")
 			handler.Response.SetStatus(403, handler.Constants.Statuses)
 
 			return
