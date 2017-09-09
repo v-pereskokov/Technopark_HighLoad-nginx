@@ -113,6 +113,27 @@ func (handler *Handler) requestHandle() {
 	}
 }
 
+func (handler *Handler) preProcessPath2() {
+	handler.Request.SetPath(handler.Dir + handler.Request.GetPath())
+
+	handler.getResponse()
+}
+
+func (handler *Handler) getResponse() {
+	if strings.Contains(handler.Request.GetPath(), "../") {
+		handler.Response.SetStatus(403, handler.Constants.Statuses)
+
+		return
+	}
+
+	isDirectory := strings.HasSuffix(handler.Request.GetPath(), "/")
+	if isDirectory {
+		handler.Request.SetPath(handler.Request.GetPath() + "index.html")
+	}
+	
+	
+}
+
 func (handler *Handler) preProcessPath() {
 	handler.Request.SetPath(handler.Dir + handler.Request.GetPath())
 	file := handler.checkPath(false)
@@ -128,17 +149,25 @@ func (handler *Handler) preProcessPath() {
 func (handler *Handler) checkPath(is_dir bool) os.FileInfo {
 	requestPath := handler.Request.GetPath()
 
+	fmt.Println(requestPath)
+
 	clearPath := path.Clean(requestPath)
 	handler.Request.SetPath(clearPath)
 
 	info, err := os.Stat(requestPath)
 	if err != nil {
-		if os.IsNotExist(err) && !is_dir {
-			handler.Response.SetStatus(404, handler.Constants.Statuses)
-		} else {
-			handler.Response.SetStatus(403, handler.Constants.Statuses)
-		}
+		fmt.Println("Error")
+		fmt.Println(err)
+		fmt.Println("")
+
+		handler.Response.SetStatus(404, handler.Constants.Statuses)
 	} else if !strings.Contains(clearPath, handler.Dir) {
+		if strings.Contains(requestPath, "dir2") {
+			fmt.Println("check")
+			fmt.Println(clearPath + "  " + handler.Dir)
+			fmt.Println("")
+		}
+
 		handler.Response.SetStatus(403, handler.Constants.Statuses)
 	}
 
