@@ -3,8 +3,8 @@
 ## HTTP server
 
 [![Build Status](https://travis-ci.org/vladpereskokov/Technopark_HighLoad-nginx.svg?branch=develop)](https://travis-ci.org/vladpereskokov/Technopark_HighLoad-nginx)  
-
-
+  
+**All tests passed**
 ### Development stack
 
 * Go lang
