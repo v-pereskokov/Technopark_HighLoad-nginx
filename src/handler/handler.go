@@ -130,8 +130,11 @@ func (handler *Handler) getResponse() {
 	if isDirectory {
 		handler.Request.SetPath(handler.Request.GetPath() + "index.html")
 	}
-	
-	
+
+	params_index := strings.LastIndex(handler.Request.GetPath(), "?")
+	if params_index > -1 {
+		handler.Request.SetPath(handler.Request.GetPath()[:params_index])
+	}
 }
 
 func (handler *Handler) preProcessPath() {
