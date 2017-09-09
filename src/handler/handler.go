@@ -126,28 +126,29 @@ func (handler *Handler) preProcessPath() {
 }
 
 func (handler *Handler) checkPath(is_dir bool) os.FileInfo {
-	request_path := handler.Request.GetPath()
+	requestPath := handler.Request.GetPath()
 
-	clear_path := path.Clean(request_path)
-	handler.Request.SetPath(clear_path)
+	clearPath := path.Clean(requestPath)
+	handler.Request.SetPath(clearPath)
 
-	info, err := os.Stat(request_path)
+	info, err := os.Stat(requestPath)
 	if err != nil {
 		if os.IsNotExist(err) && !is_dir {
 			handler.Response.SetStatus(404, handler.Constants.Statuses)
 		} else {
 			handler.Response.SetStatus(403, handler.Constants.Statuses)
 		}
-	} else if !strings.Contains(clear_path, handler.Dir) {
+	} else if !strings.Contains(clearPath, handler.Dir) {
 		handler.Response.SetStatus(403, handler.Constants.Statuses)
 	}
+
 	return info
 }
 
 func (handler *Handler) setContentHeaders(info os.FileInfo) {
 	if handler.Response.IsOk() {
 		handler.Response.SetHeader("Content-Length", strconv.Itoa(int(info.Size())))
-		handler.Response.SetHeader("Content-Type", handler.get_content_type())
+		handler.Response.SetHeader("Content-Type", handler.getContentType())
 	} else {
 		handler.Response.SetHeader("Content-Length",
 			strconv.Itoa(len(handler.Response.GetErrorBody(handler.Response.Status.Message))))
@@ -155,7 +156,7 @@ func (handler *Handler) setContentHeaders(info os.FileInfo) {
 	}
 }
 
-func (handler *Handler) get_content_type() string {
+func (handler *Handler) getContentType() string {
 	extension := ""
 
 	requestPath := handler.Request.GetPath()
