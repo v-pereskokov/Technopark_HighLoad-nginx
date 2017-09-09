@@ -9,7 +9,6 @@ import (
 	"net"
 	"net/url"
 	"os"
-	"path"
 	"strconv"
 	"strings"
 	"time"
@@ -113,16 +112,19 @@ func (handler *Handler) requestHandle() {
 	}
 }
 
-func (handler *Handler) preProcessPath2() {
+func (handler *Handler) preProcessPath() {
 	handler.Request.SetPath(handler.Dir + handler.Request.GetPath())
 
-	handler.getResponse()
+	handler.setResponse()
 }
 
-func (handler *Handler) getResponse() {
+func (handler *Handler) setResponse() {
 	if strings.Contains(handler.Request.GetPath(), "../") {
 		handler.Response.SetStatus(403, handler.Constants.Statuses)
 
+		fmt.Println("path: ")
+		fmt.Println(handler.Request.GetPath())
+		fmt.Println("")
 		return
 	}
 
@@ -131,50 +133,34 @@ func (handler *Handler) getResponse() {
 		handler.Request.SetPath(handler.Request.GetPath() + "index.html")
 	}
 
-	params_index := strings.LastIndex(handler.Request.GetPath(), "?")
-	if params_index > -1 {
-		handler.Request.SetPath(handler.Request.GetPath()[:params_index])
-	}
-}
-
-func (handler *Handler) preProcessPath() {
-	handler.Request.SetPath(handler.Dir + handler.Request.GetPath())
-	file := handler.checkPath(false)
-
-	if file != nil && file.IsDir() {
-		handler.Request.SetPath(handler.Request.GetPath() + constants.INDEX_FILE)
-		file = handler.checkPath(true)
+	paramsIndex := strings.LastIndex(handler.Request.GetPath(), "?")
+	if paramsIndex > -1 {
+		handler.Request.SetPath(handler.Request.GetPath()[:paramsIndex])
 	}
 
-	handler.setContentHeaders(file)
-}
-
-func (handler *Handler) checkPath(is_dir bool) os.FileInfo {
-	requestPath := handler.Request.GetPath()
-
-	fmt.Println(requestPath)
-
-	clearPath := path.Clean(requestPath)
-	handler.Request.SetPath(clearPath)
-
-	info, err := os.Stat(requestPath)
+	info, err := os.Stat(handler.Request.GetPath())
 	if err != nil {
-		fmt.Println("Error")
-		fmt.Println(err)
-		fmt.Println("")
+		if os.IsNotExist(err) && !isDirectory {
+			handler.Response.SetStatus(404, handler.Constants.Statuses)
 
-		handler.Response.SetStatus(404, handler.Constants.Statuses)
-	} else if !strings.Contains(clearPath, handler.Dir) {
-		if strings.Contains(requestPath, "dir2") {
-			fmt.Println("check")
-			fmt.Println(clearPath + "  " + handler.Dir)
+			return
+		} else {
+			fmt.Println("req: ")
+			fmt.Println(handler.Request)
 			fmt.Println("")
-		}
+			handler.Response.SetStatus(403, handler.Constants.Statuses)
 
-		handler.Response.SetStatus(403, handler.Constants.Statuses)
+			return
+		}
 	}
 
-	return info
+	handler.setContentHeaders(info)
+
+	if handler.Request.Method.Type == "HEAD" {
+		handler.Response.SetStatus(200, handler.Constants.Statuses)
+
+		return
+	}
 }
 
 func (handler *Handler) setContentHeaders(info os.FileInfo) {

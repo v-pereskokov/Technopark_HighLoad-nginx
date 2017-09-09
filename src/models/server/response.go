@@ -1,6 +1,7 @@
 package server
 
 import (
+	"fmt"
 	"io/ioutil"
 )
 
@@ -28,6 +29,8 @@ func (response *Response) IsOk() bool {
 }
 
 func (response Response) GetOkBody(path string) ([]byte, error) {
+	fmt.Print("path: ")
+	fmt.Println(path)
 	file, err := ioutil.ReadFile(path)
 	if err != nil {
 		return nil, err
