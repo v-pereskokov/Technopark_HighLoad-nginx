@@ -115,17 +115,17 @@ func (handler *Handler) requestHandle() {
 
 func (handler *Handler) preProcessPath() {
 	handler.Request.SetPath(handler.Dir + handler.Request.GetPath())
-	file_info := handler.check_path(false)
+	file := handler.checkPath(false)
 
-	if file_info != nil && file_info.IsDir() {
+	if file != nil && file.IsDir() {
 		handler.Request.SetPath(handler.Request.GetPath() + constants.INDEX_FILE)
-		file_info = handler.check_path(true)
+		file = handler.checkPath(true)
 	}
 
-	handler.setContentHeaders(file_info)
+	handler.setContentHeaders(file)
 }
 
-func (handler *Handler) check_path(is_dir bool) os.FileInfo {
+func (handler *Handler) checkPath(is_dir bool) os.FileInfo {
 	request_path := handler.Request.GetPath()
 
 	clear_path := path.Clean(request_path)
