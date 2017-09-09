@@ -193,11 +193,8 @@ func (handler Handler) writeResponse() {
 
 	handler.write("")
 	if handler.Request.Method.Type != "HEAD" {
-		fmt.Println(handler.Request.Method.Type)
 		handler.writeBody()
 	}
-
-	handler.write("\r\n")
 }
 
 func (handler Handler) writeHeader() {
