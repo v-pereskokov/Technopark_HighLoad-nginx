@@ -62,7 +62,6 @@ func (handler *Handler) start(channel chan net.Conn) {
 
 func (handler *Handler) handle() {
 	handler.readRequest()
-	handler.requestHandle()
 	handler.writeResponse()
 	handler.closeConn()
 }
@@ -78,6 +77,7 @@ func (handler *Handler) readRequest() {
 	}
 
 	handler.parseRequest(string(buffer))
+	handler.requestHandle()
 }
 
 func (handler *Handler) parseRequest(query string) {
