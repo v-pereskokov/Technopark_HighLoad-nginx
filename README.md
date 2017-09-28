@@ -23,33 +23,33 @@
 ### Clone
 
 ```bash
-  git clone [this repo] $GOPATH/github.com/vladpereskokov
+  $ git clone [this repo] $GOPATH/github.com/vladpereskokov
 ```
 
 <a name="lrun"></a>
 ### Local run
 
 ```go
-  go run ./src/main.go
+  $ go run ./src/main.go
 ```  
 *or*  
 ```bash
-  make run
+  $ make run
 ```
 
 <a name="drun"></a>
 ### Docker run
 
 ```bash
-  docker build -t [NAME] [THIS REPO OR .]
-  docker run -p 80:80 --name [COMTAINER NAME] -t [NAME]
+  $ docker build -t [NAME] [THIS REPO OR .]
+  $ docker run -p 80:80 --name [COMTAINER NAME] -t [NAME]
 ```  
 
 <a name="utest"></a>
 ### Unit tests
 
 ```bash
-  make
+  $ make
 ```
 
 <a name="htest"></a>
@@ -60,7 +60,7 @@
 **All tests passed**  
 
 ```bash
-  ./httptest.py
+  $ ./httptest.py
 ```
 
 <a name="author"></a>
