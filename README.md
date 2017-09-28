@@ -16,8 +16,7 @@
   git clone [this repo] $GOPATH/github.com/vladpereskokov
 ```
 
-### Run
-
+### Local run
 
 ```go
   go run ./src/main.go
@@ -26,6 +25,13 @@
 ```bash
   make run
 ```
+
+### Docker run
+
+```bash
+  docker build -t [NAME] [THIS REPO OR .]
+  docker run -p 80:80 --name [COMTAINER NAME] -t [NAME]
+```  
 
 ### Tests
 
