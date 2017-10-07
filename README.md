@@ -42,7 +42,7 @@
 
 ```bash
   $ docker build -t [NAME] [THIS REPO OR .]
-  $ docker run -p 80:80 --name [COMTAINER NAME] -t [NAME]
+  $ docker run -p 80:80 -c 4 --name [COMTAINER NAME] -t [NAME]
 ```  
 
 <a name="utest"></a>
