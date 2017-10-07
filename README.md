@@ -29,7 +29,7 @@
 <a name="lrun"></a>
 ### Local run
 
-```go
+```bash
   $ go run ./src/main.go
 ```  
 *or*  
