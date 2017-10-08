@@ -7,7 +7,7 @@ Benchmarking 127.0.0.1 (be patient)
 
 Server Software:        VLADDOS
 Server Hostname:        127.0.0.1
-Server Port:            3030
+Server Port:            80
 
 Document Path:          /httptest/160313.jpg
 Document Length:        267039 bytes
