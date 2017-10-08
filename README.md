@@ -11,6 +11,7 @@
   * [Docker run](#drun)  
   * [Unit tests](#utest)  
   * [Http test suite](#htest)  
+  * [Benchmarks](#benchs)  
   * [Author](#author)  
 
 <a name="dstack"></a>
@@ -29,7 +30,7 @@
 <a name="lrun"></a>
 ### Local run
 
-```go
+```bash
   $ go run ./src/main.go
 ```  
 *or*  
@@ -62,6 +63,12 @@
 ```bash
   $ ./httptest.py
 ```
+
+<a name="benchs"></a>
+### Benchmarks
+
+[Nginx bench](https://github.com/vladpereskokov/Technopark_HighLoad-nginx/blob/master/test-nginx.md)  
+[Technopark Nginx bench](https://github.com/vladpereskokov/Technopark_HighLoad-nginx/blob/master/test-technopark-nginx.md)  
 
 <a name="author"></a>
 ### Author  
