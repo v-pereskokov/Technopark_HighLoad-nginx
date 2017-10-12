@@ -6,6 +6,6 @@
     "port": 80
   },
   "dir": {
-    "path": "pwd"
+    "path": "/var/www/html"
   }
 }
