@@ -10,9 +10,6 @@ type Dir struct {
 }
 
 func (dir *Dir) findDir() {
-	fmt.Print("first: ")
-	fmt.Println(dir.Path)
-
 	if dir.Path == "pwd" {
 		pwd, err := os.Getwd()
 		if err != nil {
@@ -25,8 +22,6 @@ func (dir *Dir) findDir() {
 
 func (dir *Dir) GetDir() string {
 	dir.findDir()
-
-	fmt.Println(dir.Path)
 
 	return dir.Path
 }
