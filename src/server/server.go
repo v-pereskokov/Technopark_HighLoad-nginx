@@ -14,6 +14,7 @@ type Server struct {
 	Protocol string
 	Host     string
 	Port     string
+	CPU      int
 	IsSetup  bool
 }
 
@@ -23,6 +24,7 @@ func CreateServer(config modelConfig.Server) (server Server) {
 	server.setHost(config.Host)
 	server.setPort(strconv.Itoa(config.Port))
 	server.setSetup(true)
+	server.setCPU(config.CPU)
 
 	return
 }
@@ -31,7 +33,7 @@ func (server *Server) Start(handle handler.HandlerFunc) {
 	if server.IsSetup {
 		listener, err := net.Listen(server.Network, ":"+server.Port)
 		if err != nil {
-			panic("Failed start server: " + err.Error())
+			panic("failed start server: " + err.Error())
 		}
 		defer listener.Close()
 
@@ -39,7 +41,7 @@ func (server *Server) Start(handle handler.HandlerFunc) {
 
 		ch := make(chan net.Conn)
 
-		for i := 0; i < 4; i++ {
+		for i := 0; i < server.CPU; i++ {
 			println("Created worker...")
 			handle(ch)
 		}
@@ -77,4 +79,8 @@ func (server *Server) setPort(port string) {
 
 func (server *Server) setSetup(isSetup bool) {
 	server.IsSetup = isSetup
+}
+
+func (server *Server) setCPU(CPU int) {
+	server.CPU = CPU
 }
