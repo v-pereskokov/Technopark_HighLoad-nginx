@@ -10,6 +10,7 @@ type Server struct {
 	Protocol string `json:"protocol"`
 	Host     string `json:"host"`
 	Port     int    `json:"port"`
+	CPU      int    `json:"cpu"`
 }
 
 func (server *Server) GetNetwork() string {
@@ -32,4 +33,8 @@ func (server *Server) GetPort() string {
 	}
 
 	return port
+}
+
+func (server *Server) GetCPU() int {
+	return server.CPU
 }
