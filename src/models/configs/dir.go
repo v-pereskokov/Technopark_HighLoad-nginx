@@ -1,9 +1,6 @@
 package configs
 
-import (
-	"fmt"
-	"os"
-)
+import "os"
 
 type Dir struct {
 	Path string `json:"path"`
