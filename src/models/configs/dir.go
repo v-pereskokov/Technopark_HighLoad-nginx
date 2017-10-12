@@ -1,9 +1,6 @@
 package configs
 
-import (
-	"fmt"
-	"os"
-)
+import "os"
 
 type Dir struct {
 	Path string `json:"path"`
@@ -22,8 +19,6 @@ func (dir *Dir) findDir() {
 
 func (dir *Dir) GetDir() string {
 	dir.findDir()
-
-	fmt.Println(dir.Path)
 
 	return dir.Path
 }

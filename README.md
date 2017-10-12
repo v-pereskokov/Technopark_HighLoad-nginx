@@ -67,8 +67,8 @@
 <a name="benchs"></a>
 ### Benchmarks
 
-[Nginx bench](https://github.com/vladpereskokov/Technopark_HighLoad-nginx/blob/master/test-nginx.md)  
-[Technopark Nginx bench](https://github.com/vladpereskokov/Technopark_HighLoad-nginx/blob/master/test-technopark-nginx.md)  
+[Nginx bench](https://github.com/vladpereskokov/Technopark_HighLoad-nginx/blob/master/benchmarks/test-nginx.md)  
+[Technopark Nginx bench](https://github.com/vladpereskokov/Technopark_HighLoad-nginx/blob/master/benchmarks/test-technopark-nginx.md)  
 
 <a name="author"></a>
 ### Author  

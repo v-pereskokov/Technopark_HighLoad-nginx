@@ -22,8 +22,7 @@ func main() {
 
 	serverConfig.Dir.GetDir()
 
-	fmt.Println("cpu: ")
-	fmt.Println(runtime.NumCPU())
+	fmt.Printf("cpu: %v\n", runtime.NumCPU())
 	runtime.GOMAXPROCS(runtime.NumCPU())
 
 	httpServer := server.CreateServer(*serverConfig.GetServer())
