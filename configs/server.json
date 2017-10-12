@@ -3,7 +3,7 @@
     "network": "tcp",
     "protocol": "http",
     "host": "localhost",
-    "port": 3030,
+    "port": 80,
     "cpu": 4
   },
   "dir": {
