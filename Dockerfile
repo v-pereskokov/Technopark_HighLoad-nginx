@@ -19,9 +19,10 @@ RUN wget -qO- http://golang.org/dl/go1.8.3.linux-amd64.tar.gz | tar -C /usr/loca
 RUN mkdir -p $GOPATH/src/github.com/vladpereskokov/Technopark_HighLoad-nginx
 ADD . $GOPATH/src/github.com/vladpereskokov/Technopark_HighLoad-nginx
 
-RUN cd /var/www/html\
-    git clone https://github.com/init/http-test-suite.git;\
-    mv ./http-test-suite/httptest ./
+RUN mkdir -p /var/www/html && chown -R www-data:www-data /var/www/html
+RUN cd /var/www/html \
+    && git clone https://github.com/init/http-test-suite.git \
+    && mv ./http-test-suite/httptest ./
 
 WORKDIR /root/go
 EXPOSE 80
