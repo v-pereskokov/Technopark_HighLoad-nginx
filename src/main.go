@@ -23,7 +23,7 @@ func main() {
 		log.Panicf("can not init server config: %v", err)
 	}
 
-	serverConfig.Dir.GetDir()
+	serverConfig.Dir.SetDir()
 
 	fmt.Printf("cpu: %v\n", MAX_PROCS)
 	runtime.GOMAXPROCS(MAX_PROCS)
