@@ -10,7 +10,10 @@ import (
 	"runtime"
 )
 
-const SERVER_CONFIG = "configs/server.json"
+const (
+	SERVER_CONFIG = "configs/server.json"
+	MAX_PROCS     = 1
+)
 
 func main() {
 	serverConfig := new(configs.Config)
@@ -22,8 +25,8 @@ func main() {
 
 	serverConfig.Dir.GetDir()
 
-	fmt.Printf("cpu: %v\n", serverConfig.GetServer().GetCPU())
-	runtime.GOMAXPROCS(serverConfig.GetServer().GetCPU())
+	fmt.Printf("cpu: %v\n", MAX_PROCS)
+	runtime.GOMAXPROCS(MAX_PROCS)
 
 	httpServer := server.CreateServer(*serverConfig.GetServer())
 	httpServer.Start(handler.CreateHandler(serverConfig.Dir.Path))
