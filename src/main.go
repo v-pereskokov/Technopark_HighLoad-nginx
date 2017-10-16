@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"github.com/vladpereskokov/Technopark_HighLoad-nginx/src/handler"
 	"github.com/vladpereskokov/Technopark_HighLoad-nginx/src/models/configs"
 	"github.com/vladpereskokov/Technopark_HighLoad-nginx/src/server"
@@ -25,7 +24,7 @@ func main() {
 
 	serverConfig.Dir.SetDir()
 
-	fmt.Printf("cpu: %v\n", MAX_PROCS)
+	log.Printf("cpu: %v\n", MAX_PROCS)
 	runtime.GOMAXPROCS(MAX_PROCS)
 
 	httpServer := server.CreateServer(*serverConfig.GetServer())
