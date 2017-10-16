@@ -17,7 +17,7 @@ func (dir *Dir) findDir() {
 	}
 }
 
-func (dir *Dir) GetDir() string {
+func (dir *Dir) SetDir() string {
 	dir.findDir()
 
 	return dir.Path
