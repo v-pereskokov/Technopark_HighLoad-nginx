@@ -44,8 +44,8 @@ func TestFromFileServer(t *testing.T) {
 		t.Errorf("port don't match! %s", serverConfig.GetPort())
 	}
 
-	if dirConfig.GetDir() != "/usr/topDir/" {
-		t.Errorf("dir don't match! %s", dirConfig.GetDir())
+	if dirConfig.SetDir() != "/usr/topDir/" {
+		t.Errorf("dir don't match! %s", dirConfig.SetDir())
 	}
 }
 
@@ -76,8 +76,8 @@ func TestFromFileServerPwd(t *testing.T) {
 		t.Errorf("port don't match! %s", serverConfig.GetPort())
 	}
 
-	if !strings.Contains(dirConfig.GetDir(), "github.com/vladpereskokov/Technopark_HighLoad-nginx/") {
-		t.Errorf("pwd dir don't match! %s", dirConfig.GetDir())
+	if !strings.Contains(dirConfig.SetDir(), "github.com/vladpereskokov/Technopark_HighLoad-nginx/") {
+		t.Errorf("pwd dir don't match! %s", dirConfig.SetDir())
 	}
 }
 
